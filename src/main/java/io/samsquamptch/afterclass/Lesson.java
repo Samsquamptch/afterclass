@@ -13,4 +13,9 @@ public class Lesson {
     private WeekDay weekDay;
     private LocalTime startTime;
     private LocalTime endTime;
+
+    public Lesson(String name, int id) {
+        this.name = name;
+        this.id = id;
+    }
 }
