@@ -26,7 +26,7 @@ public class User {
     private Group group;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Lesson> lessons = new ArrayList<>();
+    private final List<Lesson> lessons = new ArrayList<>();
 
     public User(String name) {
         this.name = name;

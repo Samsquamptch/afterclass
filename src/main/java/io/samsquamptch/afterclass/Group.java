@@ -21,11 +21,15 @@ public class Group {
     @Setter
     private String name;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<User> users = new ArrayList<>();
+    @Setter
+    private String passCode;
 
-    public Group(String name) {
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<User> users = new ArrayList<>();
+
+    public Group(String name, String passCode) {
         this.name = name;
+        this.passCode = passCode;
     }
 
     public void addUser(User user) {this.users.add(user);}
