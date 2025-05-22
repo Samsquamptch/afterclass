@@ -9,5 +9,5 @@ public interface GroupRepository extends JpaRepository <Group, Long> {
 
     Group findByPassCode(String passCode);
 
-    Group findById(long id);
+    Group findGroupById(long id);
 }
