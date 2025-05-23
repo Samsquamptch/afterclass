@@ -25,7 +25,7 @@ import org.springframework.http.MediaType;
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(GroupController.class)
 
-public class ApiTests {
+public class GroupApiTests {
 
     @Autowired
     private MockMvc mvc;
