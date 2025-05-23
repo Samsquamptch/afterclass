@@ -1,6 +1,6 @@
 package io.samsquamptch.afterclass.controllers;
 
-import io.samsquamptch.afterclass.dto.CreateGroupRequest;
+import io.samsquamptch.afterclass.dto.GroupRequestDTO;
 import io.samsquamptch.afterclass.dto.GroupDTO;
 import io.samsquamptch.afterclass.services.GroupService;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class GroupController {
     }
     
     @PostMapping()
-    public ResponseEntity<GroupDTO> createGroup(@RequestBody CreateGroupRequest request) {
+    public ResponseEntity<GroupDTO> createGroup(@RequestBody GroupRequestDTO request) {
         GroupDTO createdGroup = groupService.createGroup(request);
         return new ResponseEntity<>(createdGroup, HttpStatus.CREATED);
     }

@@ -2,7 +2,7 @@ package io.samsquamptch.afterclass;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.samsquamptch.afterclass.controllers.GroupController;
-import io.samsquamptch.afterclass.dto.CreateGroupRequest;
+import io.samsquamptch.afterclass.dto.GroupRequestDTO;
 import io.samsquamptch.afterclass.dto.GroupDTO;
 import io.samsquamptch.afterclass.services.GroupService;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ public class GroupApiTests {
 
     @Test
     void testCreateGroup() throws Exception {
-        CreateGroupRequest request = new CreateGroupRequest("Test Group", "zXXtpQ");
+        GroupRequestDTO request = new GroupRequestDTO("Test Group");
         String json = objectMapper.writeValueAsString(request);
         mvc.perform(post("/api/groups")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -56,13 +56,12 @@ public class GroupApiTests {
         mvc.perform(get("/api/groups/zXXtpQ")).andExpectAll(status().isOk(),
                 content().contentType(MediaType.APPLICATION_JSON),
                 jsonPath("$.group.id").value(1),
-                jsonPath("$.group.name").value("Test Grouo"),
-                jsonPath("$.group.passCode").value("zXXtpQ"));
+                jsonPath("$.group.name").value("Test Grouo"));
     }
 
     @Test
     void testUpdateGroup() throws Exception {
-        CreateGroupRequest request = new CreateGroupRequest("Updated Group", "zXXtpQ");
+        GroupRequestDTO request = new GroupRequestDTO("Updated Group");
         String json = objectMapper.writeValueAsString(request);
 
         GroupDTO testDTO = new GroupDTO(1, "Updated Group", "zXXtpQ", null);
@@ -74,7 +73,6 @@ public class GroupApiTests {
                 .content(json))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.group.id").value(1))
-                .andExpect(jsonPath("$.group.name").value("Updated Group"))
-                .andExpect(jsonPath("$.group.passCode").value("zXXtpQ"));
+                .andExpect(jsonPath("$.group.name").value("Updated Group"));
     }
 }
