@@ -73,8 +73,8 @@ public class ApiTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("Updated Group"))
-                .andExpect(jsonPath("$.passCode").value("zXXtpQ"));
+                .andExpect(jsonPath("$.group.id").value(1))
+                .andExpect(jsonPath("$.group.name").value("Updated Group"))
+                .andExpect(jsonPath("$.group.passCode").value("zXXtpQ"));
     }
 }
