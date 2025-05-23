@@ -18,7 +18,7 @@ public class GroupService {
     public GroupDTO createGroup(CreateGroupRequest request) {
         Group group = new Group(request.getName(), request.getPassCode());
         Group savedGroup = groupRepository.save(group);
-        return new GroupDTO(savedGroup.getId(), savedGroup.getName(), savedGroup.getPassCode());
+        return new GroupDTO(savedGroup.getId(), savedGroup.getName(), savedGroup.getPassCode(), null);
     }
 
     public GroupDTO getByPasscode(String passcode) {

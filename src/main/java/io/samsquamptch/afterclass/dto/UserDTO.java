@@ -9,9 +9,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GroupDTO {
+public class UserDTO {
     private long id;
     private String name;
-    private String passCode;
-    private List<UserDTO> users;
+    private List<LessonDTO> lessons;
 }
