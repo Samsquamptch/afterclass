@@ -4,6 +4,7 @@ import io.samsquamptch.afterclass.Group;
 import io.samsquamptch.afterclass.dto.CreateGroupRequest;
 import io.samsquamptch.afterclass.dto.GroupDTO;
 import io.samsquamptch.afterclass.repositories.GroupRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,11 +22,15 @@ public class GroupService {
         return new GroupDTO(savedGroup.getId(), savedGroup.getName(), savedGroup.getPassCode(), null);
     }
 
-    public GroupDTO getByPasscode(String passcode) {
+    public GroupDTO getGroupByPasscode(String passcode) {
         return null;
     }
 
-    public GroupDTO updateGroup(String name) {
+    public GroupDTO updateGroup(String passCode, String name) {
+        return null;
+    }
+
+    public ResponseEntity<Void> deleteGroup(String passCode) {
         return null;
     }
 }

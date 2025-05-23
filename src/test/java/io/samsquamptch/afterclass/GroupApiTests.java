@@ -48,10 +48,10 @@ public class GroupApiTests {
 
     @Test
     void testGetGroup() throws Exception {
-        GroupDTO testDTO = new GroupDTO(1, "Test Group", "zXXtpQ");
+        GroupDTO testDTO = new GroupDTO(1, "Test Group", "zXXtpQ", null);
 
         // mock the service to return the DTO when called with the passcode
-        when(service.getByPasscode("zXXtpQ")).thenReturn(testDTO);
+        when(service.getGroupByPasscode("zXXtpQ")).thenReturn(testDTO);
 
         mvc.perform(get("/api/groups/zXXtpQ")).andExpectAll(status().isOk(),
                 content().contentType(MediaType.APPLICATION_JSON),
@@ -65,9 +65,9 @@ public class GroupApiTests {
         CreateGroupRequest request = new CreateGroupRequest("Updated Group", "zXXtpQ");
         String json = objectMapper.writeValueAsString(request);
 
-        GroupDTO testDTO = new GroupDTO(1, "Updated Group", "zXXtpQ");
+        GroupDTO testDTO = new GroupDTO(1, "Updated Group", "zXXtpQ", null);
 
-        when(service.updateGroup("zXXtpQ")).thenReturn(testDTO);
+        when(service.updateGroup("zXXtpQ", "Updated Group")).thenReturn(testDTO);
 
         mvc.perform(put("/api/groups/zXXtpQ")
                 .contentType(MediaType.APPLICATION_JSON)
