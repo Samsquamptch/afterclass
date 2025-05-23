@@ -1,4 +1,4 @@
-package io.samsquamptch.afterclass;
+package io.samsquamptch.afterclass.controllers;
 
 import org.springframework.web.bind.annotation.*;
 
