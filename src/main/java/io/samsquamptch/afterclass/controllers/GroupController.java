@@ -16,21 +16,19 @@ public class GroupController {
     public GroupController(GroupService groupService) {
         this.groupService = groupService;
     }
-
-
+    
     @PostMapping()
     public ResponseEntity<GroupDTO> createGroup(@RequestBody CreateGroupRequest request) {
         GroupDTO createdGroup = groupService.createGroup(request);
         return new ResponseEntity<>(createdGroup, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+    public void getGroup(@PathVariable String id) {}
+
     @PutMapping("/{id}")
-    public void updateGroup(@PathVariable Integer id) {}
+    public void updateGroup(@PathVariable String id) {}
 
     @DeleteMapping("/{id}")
-    public void deleteGroup(@PathVariable Integer id) {}
-
-    @GetMapping("/{id}")
-    public void getGroup(@PathVariable Integer id) {}
-
+    public void deleteGroup(@PathVariable String id) {}
 }

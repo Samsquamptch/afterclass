@@ -6,8 +6,6 @@ import io.samsquamptch.afterclass.dto.GroupDTO;
 import io.samsquamptch.afterclass.repositories.GroupRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class GroupService {
 
@@ -18,15 +16,16 @@ public class GroupService {
     }
 
     public GroupDTO createGroup(CreateGroupRequest request) {
-        Group group = new Group();
-        group.setName(request.getName());
-        group.setPassCode(request.getPassCode());
-
+        Group group = new Group(request.getName(), request.getPassCode());
         Group savedGroup = groupRepository.save(group);
-        GroupDTO groupDTO = new GroupDTO();
-        groupDTO.setId(savedGroup.getId());
-        groupDTO.setName(savedGroup.getName());
-        groupDTO.setPassCode(savedGroup.getPassCode());
-        return groupDTO;
+        return new GroupDTO(savedGroup.getId(), savedGroup.getName(), savedGroup.getPassCode());
+    }
+
+    public GroupDTO getByPasscode(String passcode) {
+        return null;
+    }
+
+    public GroupDTO updateGroup(String name) {
+        return null;
     }
 }

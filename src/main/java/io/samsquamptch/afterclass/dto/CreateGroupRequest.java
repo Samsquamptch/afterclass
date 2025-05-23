@@ -1,10 +1,12 @@
 package io.samsquamptch.afterclass.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateGroupRequest {
     private String name;
     private String passCode;
