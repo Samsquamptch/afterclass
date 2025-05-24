@@ -1,10 +1,8 @@
 package io.samsquamptch.afterclass.services;
 
 import io.samsquamptch.afterclass.Group;
-import io.samsquamptch.afterclass.dto.GroupRequestDTO;
 import io.samsquamptch.afterclass.dto.GroupDTO;
 import io.samsquamptch.afterclass.repositories.GroupRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

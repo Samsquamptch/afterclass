@@ -39,7 +39,7 @@ public class GroupApiTests {
         GroupRequestDTO request = new GroupRequestDTO("Test Group");
         String json = objectMapper.writeValueAsString(request);
 
-        GroupDTO testDTO = new GroupDTO(1, "Test Group", "zXXtpQ", null);
+        GroupDTO testDTO = new GroupDTO(1L, "Test Group", "zXXtpQ", null);
 
         when(service.createGroup("Test Group")).thenReturn(testDTO);
 
@@ -48,21 +48,21 @@ public class GroupApiTests {
                         .content(json))
                 .andExpectAll(status().isCreated(),
                         content().contentType(MediaType.APPLICATION_JSON),
-                        jsonPath("$.group.id").value(1),
+                        jsonPath("$.group.id").value(1L),
                         jsonPath("$.group.name").value("Test Group"),
                         jsonPath("$.group.passCode").value("zXXtpQ"));
     }
 
     @Test
     void testGetGroup() throws Exception {
-        GroupDTO testDTO = new GroupDTO(1, "Test Group", "zXXtpQ", null);
+        GroupDTO testDTO = new GroupDTO(1L, "Test Group", "zXXtpQ", null);
 
         when(service.getGroupByPasscode("zXXtpQ")).thenReturn(testDTO);
 
         mvc.perform(get("/api/groups/zXXtpQ"))
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
-                        jsonPath("$.group.id").value(1),
+                        jsonPath("$.group.id").value(1L),
                         jsonPath("$.group.name").value("Test Group"));
     }
 
@@ -71,7 +71,7 @@ public class GroupApiTests {
         GroupRequestDTO request = new GroupRequestDTO("Updated Group");
         String json = objectMapper.writeValueAsString(request);
 
-        GroupDTO testDTO = new GroupDTO(1, "Updated Group", "zXXtpQ", null);
+        GroupDTO testDTO = new GroupDTO(1L, "Updated Group", "zXXtpQ", null);
 
         when(service.updateGroup("zXXtpQ", "Updated Group")).thenReturn(testDTO);
 

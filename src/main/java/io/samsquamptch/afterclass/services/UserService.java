@@ -14,23 +14,23 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserDTO createUser() {
+    public UserDTO createUser(String name) {
         return null;
     }
 
-    public List<UserDTO> getAllUsers() {
+    public List<UserDTO> getAllUsers(String passCode) {
         return null;
     }
 
-    public UserDTO getUser(long id) {
+    public UserDTO getUser(String passCode, long id) {
         return null;
     }
 
-    public UserDTO updateUser(long id, String name) {
+    public UserDTO updateUser(String passCode, long id, String name) {
         return null;
     }
 
-    public ResponseEntity<Void> deleteUser(long id) {
+    public ResponseEntity<Void> deleteUser(String passCode, long id) {
         return null;
     }
 }

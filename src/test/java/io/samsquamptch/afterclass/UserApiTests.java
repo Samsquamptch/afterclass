@@ -36,10 +36,18 @@ public class UserApiTests {
     void testCreateUser() throws Exception {
         UserRequestDTO request = new UserRequestDTO("Cian");
         String json = objectMapper.writeValueAsString(request);
+
+        UserDTO testDTO = new UserDTO(1L, "Cian", null);
+
+        when(service.createUser("Cian")).thenReturn(testDTO);
+
         mvc.perform(post("/api/groups/zXXtpQ/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
-                .andExpect(status().isCreated());
+                .andExpectAll(status().isCreated(),
+                        content().contentType(MediaType.APPLICATION_JSON),
+                        jsonPath("$.user.id").value(1L),
+                        jsonPath("$.user.name").value("Cian"));
     }
 
     @Test
