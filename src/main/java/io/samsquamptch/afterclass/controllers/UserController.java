@@ -2,6 +2,8 @@ package io.samsquamptch.afterclass.controllers;
 
 import io.samsquamptch.afterclass.dto.UserDTO;
 import io.samsquamptch.afterclass.dto.UserRequestDTO;
+import io.samsquamptch.afterclass.services.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +13,14 @@ import java.util.List;
 @RequestMapping("/api/groups/{groupId}/users")
 public class UserController {
 
+    UserService userService;
+
+    public UserController(UserService userService) {this.userService = userService;}
+
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@PathVariable Long groupId, @RequestBody UserRequestDTO request) {
-        return null;
+        UserDTO createdUser = userService.createUser(groupId, request.getName());
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     @GetMapping

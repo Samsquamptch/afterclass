@@ -23,6 +23,7 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "group_id")
+    @Setter
     private Group group;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
