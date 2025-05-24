@@ -5,6 +5,7 @@ import io.samsquamptch.afterclass.controllers.LessonController;
 import io.samsquamptch.afterclass.dto.LessonDTO;
 import io.samsquamptch.afterclass.dto.LessonRequestDTO;
 import io.samsquamptch.afterclass.services.LessonService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +21,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalTime;
 
@@ -36,19 +36,25 @@ public class LessonApiTests {
     @MockitoBean
     private LessonService service;
 
-    @Test
-    void testCreateLesson() throws Exception {
-        LessonRequestDTO request = new LessonRequestDTO("IDAR",
+    private LessonRequestDTO request;
+    private LessonDTO testDTO;
+
+    @BeforeEach
+    public void setup() {
+        request = new LessonRequestDTO("IDAR",
                 WeekDay.TUESDAY,
                 LocalTime.of(18, 0),
                 LocalTime.of(21, 0));
-        String json = objectMapper.writeValueAsString(request);
-
-        LessonDTO testDTO = new LessonDTO(1L,
+        testDTO = new LessonDTO(1L,
                 "IDAR",
                 WeekDay.TUESDAY,
                 LocalTime.of(18, 0),
                 LocalTime.of(21, 0));
+    }
+
+    @Test
+    void testCreateLesson() throws Exception {
+        String json = objectMapper.writeValueAsString(request);
 
         when(service.createLesson("zXXtpQ", 1L, request)).thenReturn(testDTO);
         mvc.perform(post("/api/groups/zXXtpQ/users/1/lessons")
@@ -65,17 +71,12 @@ public class LessonApiTests {
 
     @Test
     void testGetAllLessons() throws Exception {
-        LessonDTO testDTO1 = new LessonDTO(1L,
-                "IDAR",
-                WeekDay.TUESDAY,
-                LocalTime.of(18, 0),
-                LocalTime.of(21, 0));
         LessonDTO testDTO2 = new LessonDTO(2L,
                 "Computer Networking",
                 WeekDay.WEDNESDAY,
                 LocalTime.of(18, 0),
                 LocalTime.of(19, 30));
-        List<LessonDTO> testDTOs = List.of(testDTO1, testDTO2);
+        List<LessonDTO> testDTOs = List.of(testDTO, testDTO2);
 
         when(service.getAllLessons("zXXtpQ", 1L)).thenReturn(testDTOs);
 
@@ -96,12 +97,6 @@ public class LessonApiTests {
 
     @Test
     void testGetLesson() throws Exception {
-        LessonDTO testDTO = new LessonDTO(1L,
-                "IDAR",
-                WeekDay.TUESDAY,
-                LocalTime.of(18, 0),
-                LocalTime.of(21, 0));
-
         when(service.getLesson("zXXtpQ", 1L, 1L)).thenReturn(testDTO);
 
         mvc.perform(get("/api/groups/zXXtpQ/users/1/lessons/1"))
@@ -116,10 +111,6 @@ public class LessonApiTests {
 
     @Test
     void testUpdateLesson() throws Exception {
-        LessonRequestDTO request = new LessonRequestDTO("IDAR",
-                WeekDay.TUESDAY,
-                LocalTime.of(18, 0),
-                LocalTime.of(21, 0));
         String json = objectMapper.writeValueAsString(request);
 
         doNothing().when(service).updateLesson("zXXtpQ", 1L, 1L, request);
