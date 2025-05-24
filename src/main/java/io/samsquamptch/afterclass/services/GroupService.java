@@ -18,8 +18,8 @@ public class GroupService {
         this.groupRepository = groupRepository;
     }
 
-    public GroupDTO createGroup(GroupRequestDTO request) {
-        Group group = new Group(request.getName(), UUID.randomUUID().toString().substring(0, 6));
+    public GroupDTO createGroup(String name) {
+        Group group = new Group(name, UUID.randomUUID().toString().substring(0, 6));
         Group savedGroup = groupRepository.save(group);
         return new GroupDTO(savedGroup.getId(), savedGroup.getName(), savedGroup.getPassCode(), null);
     }

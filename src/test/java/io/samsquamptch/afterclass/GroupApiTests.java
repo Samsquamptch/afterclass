@@ -38,10 +38,19 @@ public class GroupApiTests {
     void testCreateGroup() throws Exception {
         GroupRequestDTO request = new GroupRequestDTO("Test Group");
         String json = objectMapper.writeValueAsString(request);
+
+        GroupDTO testDTO = new GroupDTO(1, "Test Group", "zXXtpQ", null);
+
+        when(service.createGroup("Test Group")).thenReturn(testDTO);
+
         mvc.perform(post("/api/groups")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
-                .andExpect(status().isCreated());
+                .andExpectAll(status().isCreated(),
+                        content().contentType(MediaType.APPLICATION_JSON),
+                        jsonPath("$.group.id").value(1),
+                        jsonPath("$.group.name").value("Test Group"),
+                        jsonPath("$.group.passCode").value("zXXtpQ"));
     }
 
     @Test
@@ -50,10 +59,11 @@ public class GroupApiTests {
 
         when(service.getGroupByPasscode("zXXtpQ")).thenReturn(testDTO);
 
-        mvc.perform(get("/api/groups/zXXtpQ")).andExpectAll(status().isOk(),
-                content().contentType(MediaType.APPLICATION_JSON),
-                jsonPath("$.group.id").value(1),
-                jsonPath("$.group.name").value("Test Grouo"));
+        mvc.perform(get("/api/groups/zXXtpQ"))
+                .andExpectAll(status().isOk(),
+                        content().contentType(MediaType.APPLICATION_JSON),
+                        jsonPath("$.group.id").value(1),
+                        jsonPath("$.group.name").value("Test Group"));
     }
 
     @Test
@@ -66,8 +76,8 @@ public class GroupApiTests {
         when(service.updateGroup("zXXtpQ", "Updated Group")).thenReturn(testDTO);
 
         mvc.perform(put("/api/groups/zXXtpQ")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(status().isOk());
     }
 
