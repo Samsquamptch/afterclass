@@ -8,33 +8,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/groups/{passCode}/users")
+@RequestMapping("/api/groups/{groupId}/users")
 public class UserController {
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@PathVariable String passCode, @RequestBody UserRequestDTO request) {
+    public ResponseEntity<UserDTO> createUser(@PathVariable Long groupId, @RequestBody UserRequestDTO request) {
         return null;
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getUsers(@PathVariable String passCode) {
+    public ResponseEntity<List<UserDTO>> getUsers(@PathVariable Long groupId) {
         return null;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable String passCode, @PathVariable Long id) {
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long groupId, @PathVariable Long id) {
         return null;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String passCode,
+    public ResponseEntity<Void> deleteUser(@PathVariable Long groupId,
                                               @PathVariable Long id,
                                               @RequestBody UserRequestDTO request) {
         return null;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> updateUser(@PathVariable String passCode,
+    public ResponseEntity<Void> updateUser(@PathVariable Long groupId,
                                            @PathVariable Long id,
                                            @RequestBody UserRequestDTO request) {
         return null;

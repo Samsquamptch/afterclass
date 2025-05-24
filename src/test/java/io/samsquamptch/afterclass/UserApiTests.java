@@ -41,7 +41,7 @@ public class UserApiTests {
 
         UserDTO testDTO = new UserDTO(1L, "Cian", null);
 
-        when(service.createUser("zXXtpQ","Cian")).thenReturn(testDTO);
+        when(service.createUser(1L,"Cian")).thenReturn(testDTO);
 
         mvc.perform(post("/api/groups/zXXtpQ/users")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -59,7 +59,7 @@ public class UserApiTests {
         UserDTO testDTO3 = new UserDTO(3L, "Chris", null);
         List<UserDTO> testDTOs = List.of(testDTO1, testDTO2, testDTO3);
 
-        when(service.getAllUsers("zXXtpQ")).thenReturn(testDTOs);
+        when(service.getAllUsers(1L)).thenReturn(testDTOs);
 
         mvc.perform(get("/api/groups/zXXtpQ/users"))
                 .andExpectAll(status().isOk(),
@@ -76,7 +76,7 @@ public class UserApiTests {
     void testGetUser() throws Exception {
         UserDTO testDTO = new UserDTO(1L, "Cian", null);
 
-        when(service.getUser("zXXtpQ", 1L)).thenReturn(testDTO);
+        when(service.getUser(1L, 1L)).thenReturn(testDTO);
 
         mvc.perform(get("/api/groups/zXXtpQ/users/1"))
                 .andExpectAll(status().isOk(),
@@ -90,7 +90,7 @@ public class UserApiTests {
         UserRequestDTO request = new UserRequestDTO("Seb");
         String json = objectMapper.writeValueAsString(request);
 
-        doNothing().when(service).updateUser("zXXtpQ", 1L, "Seb");
+        doNothing().when(service).updateUser(1L, 1L, "Seb");
 
         mvc.perform(put("/api/groups/zXXtpQ/users/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -100,7 +100,7 @@ public class UserApiTests {
 
     @Test
     void testDeleteUser() throws Exception {
-        doNothing().when(service).deleteUser("zXXtpQ", 1L);
+        doNothing().when(service).deleteUser(1L, 1L);
 
         mvc.perform(delete("/api/groups/zXXtpQ/users/1")).andExpect(status().isNoContent());
     }
