@@ -48,9 +48,9 @@ public class GroupApiTests {
                         .content(json))
                 .andExpectAll(status().isCreated(),
                         content().contentType(MediaType.APPLICATION_JSON),
-                        jsonPath("$.group.id").value(1L),
-                        jsonPath("$.group.name").value("Test Group"),
-                        jsonPath("$.group.passCode").value("zXXtpQ"));
+                        jsonPath("$.id").value(1L),
+                        jsonPath("$.name").value("Test Group"),
+                        jsonPath("$.passCode").value("zXXtpQ"));
     }
 
     @Test
@@ -62,8 +62,8 @@ public class GroupApiTests {
         mvc.perform(get("/api/groups/zXXtpQ"))
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
-                        jsonPath("$.group.id").value(1L),
-                        jsonPath("$.group.name").value("Test Group"));
+                        jsonPath("$.id").value(1L),
+                        jsonPath("$.name").value("Test Group"));
     }
 
     @Test
