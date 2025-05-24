@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalTime;
 
@@ -64,7 +65,33 @@ public class LessonApiTests {
 
     @Test
     void testGetAllLessons() throws Exception {
+        LessonDTO testDTO1 = new LessonDTO(1L,
+                "IDAR",
+                WeekDay.TUESDAY,
+                LocalTime.of(18, 0),
+                LocalTime.of(21, 0));
+        LessonDTO testDTO2 = new LessonDTO(2L,
+                "Computer Networking",
+                WeekDay.WEDNESDAY,
+                LocalTime.of(18, 0),
+                LocalTime.of(19, 30));
+        List<LessonDTO> testDTOs = List.of(testDTO1, testDTO2);
 
+        when(service.getAllLessons("zXXtpQ", 1L)).thenReturn(testDTOs);
+
+        mvc.perform(get("/api/groups/zXXtpQ/users/1/lessons"))
+                .andExpectAll(status().isOk(),
+                        jsonPath("$.size()").value(2),
+                        jsonPath("$[0].id").value(1),
+                        jsonPath("$[0].name").value("IDAR"),
+                        jsonPath("$[0].weekDay").value(WeekDay.TUESDAY),
+                        jsonPath("$[0].startTime").value(LocalTime.of(18,0)),
+                        jsonPath("$[0].endTime").value(LocalTime.of(21,0)),
+                        jsonPath("$[1].id").value(2),
+                        jsonPath("$[1].name").value("Computer Networking"),
+                        jsonPath("$[1].weekDay").value(WeekDay.WEDNESDAY),
+                        jsonPath("$[1].startTime").value(LocalTime.of(18,0)),
+                        jsonPath("$[1].endTime").value(LocalTime.of(19,30)));
     }
 
     @Test
@@ -105,6 +132,8 @@ public class LessonApiTests {
 
     @Test
     void testDeleteLesson() throws Exception {
+        doNothing().when(service).deleteLesson("zXXtpQ", 1L, 1L);
 
+        mvc.perform(delete("/api/groups/zXXtpQ/users/1/lessons/1")).andExpect(status().isNoContent());
     }
 }
