@@ -20,19 +20,17 @@ public class LessonService {
         return null;
     }
 
-    public LessonDTO getLesson(long lessonId) {
+    public LessonDTO getLesson(String passCode, Long userId, long lessonId) {
         return null;
     }
 
-    public List<LessonDTO> getAllLessons(long userId) {
+    public List<LessonDTO> getAllLessons(String passCode, Long userId) {
         return null;
     }
 
-    public ResponseEntity<Void> updateLesson(long lessonId, LessonDTO lessonDTO) {
-        return null;
+    public void updateLesson(String passCode, Long userId, Long lessonId, LessonRequestDTO requestDTO) {
     }
 
-    public ResponseEntity<Void> deleteLesson(long lessonId) {
-        return null;
+    public void deleteLesson(String passCode, Long userId, long lessonId) {
     }
 }
