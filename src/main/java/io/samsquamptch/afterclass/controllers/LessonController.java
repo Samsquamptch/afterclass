@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -53,8 +52,8 @@ public class LessonController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteLessons(@PathVariable String passCode,
                               @PathVariable Long userId,
-                              @PathVariable Long id,
-                              @RequestBody LessonRequestDTO request) {
-        return null;
+                              @PathVariable Long id) {
+        lessonService.deleteLesson(passCode, userId, id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

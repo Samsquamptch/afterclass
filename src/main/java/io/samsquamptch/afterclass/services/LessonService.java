@@ -80,6 +80,8 @@ public class LessonService {
     }
 
     public void deleteLesson(String passCode, Long userId, long lessonId) {
+        validateUserAndGroup(passCode, userId);
+        lessonRepository.deleteById(lessonId);
     }
 
     private void validateUserAndGroup(String passCode, Long userId) {
