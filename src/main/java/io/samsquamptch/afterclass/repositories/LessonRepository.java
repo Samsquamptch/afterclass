@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
-    Lesson findLessonById(Long id);
-
     List<Lesson> findByUserId(Long userId);
+
+    boolean existsByIdAndUserId(Long lessonId, Long userId);
 }

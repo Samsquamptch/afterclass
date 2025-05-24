@@ -1,6 +1,5 @@
 package io.samsquamptch.afterclass.services;
 
-import io.samsquamptch.afterclass.Group;
 import io.samsquamptch.afterclass.Lesson;
 import io.samsquamptch.afterclass.User;
 import io.samsquamptch.afterclass.dto.LessonDTO;
@@ -21,16 +20,14 @@ public class LessonService {
     private final LessonRepository lessonRepository;
     // Replace these with services once they've been set up
     private final UserRepository userRepository;
-    private final GroupRepository groupRepository;
 
     public LessonService(LessonRepository lessonRepository, UserRepository userRepository, GroupRepository groupRepository) {
         this.lessonRepository = lessonRepository;
         this.userRepository = userRepository;
-        this.groupRepository = groupRepository;
     }
 
-    public LessonDTO createLesson(String passCode, Long userId, LessonRequestDTO request) {
-        validateUserAndGroup(passCode, userId);
+    public LessonDTO createLesson(Long groupId, Long userId, LessonRequestDTO request) {
+        validateUserAndGroup(groupId, userId);
         User user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
 
         Lesson lesson  = new Lesson(request.getName(), request.getWeekDay(), request.getStartTime(), request.getEndTime());
@@ -43,8 +40,9 @@ public class LessonService {
                 savedLesson.getEndTime());
     }
 
-    public LessonDTO getLesson(String passCode, Long userId, long lessonId) {
-        validateUserAndGroup(passCode, userId);
+    public LessonDTO getLesson(Long groupId, Long userId, long lessonId) {
+        validateUserAndGroup(groupId, userId);
+        validateLessonAndUser(lessonId, userId);
 
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(NotFoundException::new);
         return new LessonDTO(lesson.getId(),
@@ -55,8 +53,8 @@ public class LessonService {
 
     }
 
-    public List<LessonDTO> getAllLessons(String passCode, Long userId) {
-        validateUserAndGroup(passCode, userId);
+    public List<LessonDTO> getAllLessons(Long groupId, Long userId) {
+        validateUserAndGroup(groupId, userId);
 
         List<Lesson> lessons = lessonRepository.findByUserId(userId);
         return lessons.stream()
@@ -69,8 +67,9 @@ public class LessonService {
                 .collect(Collectors.toList());
     }
 
-    public void updateLesson(String passCode, Long userId, Long lessonId, LessonRequestDTO requestDTO) {
-        validateUserAndGroup(passCode, userId);
+    public void updateLesson(Long groupId, Long userId, Long lessonId, LessonRequestDTO requestDTO) {
+        validateUserAndGroup(groupId, userId);
+        validateLessonAndUser(lessonId, userId);
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(NotFoundException::new);
         lesson.setName(requestDTO.getName());
         lesson.setWeekDay(requestDTO.getWeekDay());
@@ -79,18 +78,23 @@ public class LessonService {
         lessonRepository.save(lesson);
     }
 
-    public void deleteLesson(String passCode, Long userId, long lessonId) {
-        validateUserAndGroup(passCode, userId);
+    public void deleteLesson(Long groupId, Long userId, Long lessonId) {
+        validateUserAndGroup(groupId, userId);
+        validateLessonAndUser(lessonId, userId);
         lessonRepository.deleteById(lessonId);
     }
 
-    private void validateUserAndGroup(String passCode, Long userId) {
-        Group group = groupRepository.findByPassCode(passCode)
-                .orElseThrow(() -> new NotFoundException("Group not found"));
-
-        boolean isValid = userRepository.existsByIdAndGroupId(userId, group.getId());
+    private void validateUserAndGroup(Long groupId, Long userId) {
+        boolean isValid = userRepository.existsByIdAndGroupId(userId, groupId);
         if (!isValid) {
-            throw new IllegalArgumentException("User does not belong to the group");
+            throw new IllegalArgumentException("User does not belong to group");
+        }
+    }
+
+    private void validateLessonAndUser(Long lessonId, Long userId) {
+        boolean isValid = lessonRepository.existsByIdAndUserId(lessonId, userId);
+        if (!isValid) {
+            throw new IllegalArgumentException("Lesson does not belong to user");
         }
     }
 }

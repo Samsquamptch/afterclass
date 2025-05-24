@@ -2,7 +2,6 @@ package io.samsquamptch.afterclass.services;
 
 import io.samsquamptch.afterclass.dto.UserDTO;
 import io.samsquamptch.afterclass.repositories.UserRepository;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -14,23 +13,23 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserDTO createUser(String passCode, String name) {
+    public UserDTO createUser(Long groupId, String name) {
         return null;
     }
 
-    public List<UserDTO> getAllUsers(String passCode) {
+    public List<UserDTO> getAllUsers(Long groupId) {
         return null;
     }
 
-    public UserDTO getUser(String passCode, long id) {
+    public UserDTO getUser(Long groupId, Long id) {
         return null;
     }
 
-    public void updateUser(String passCode, long id, String name) {
+    public void updateUser(Long groupId, Long id, String name) {
 
     }
 
-    public void deleteUser(String passCode, long id) {
+    public void deleteUser(Long groupId, Long id) {
 
     }
 }

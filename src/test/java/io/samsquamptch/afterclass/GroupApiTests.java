@@ -62,20 +62,21 @@ public class GroupApiTests {
 
     @Test
     void testGetGroup() throws Exception {
-        when(service.getGroupByPasscode("zXXtpQ")).thenReturn(testDTO);
+        when(service.getGroup(1L)).thenReturn(testDTO);
 
         mvc.perform(get("/api/groups/zXXtpQ"))
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         jsonPath("$.id").value(1L),
-                        jsonPath("$.name").value("Test Group"));
+                        jsonPath("$.name").value("Test Group"),
+                        jsonPath("$.passCode").value("zXXtpQ"));
     }
 
     @Test
     void testUpdateGroup() throws Exception {
         String json = objectMapper.writeValueAsString(request);
 
-        doNothing().when(service).updateGroup("zXXtpQ", "Test Group");
+        doNothing().when(service).updateGroup(1L, "Test Group");
 
         mvc.perform(put("/api/groups/zXXtpQ")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -85,7 +86,7 @@ public class GroupApiTests {
 
     @Test
     void testDeleteGroup() throws Exception {
-        doNothing().when(service).deleteGroup("zXXtpQ");
+        doNothing().when(service).deleteGroup(1L);
 
         mvc.perform(delete("/api/groups/zXXtpQ")).andExpect(status().isNoContent());
     }
