@@ -78,7 +78,7 @@ public class GroupApiTests {
         mvc.perform(put("/api/groups/zXXtpQ")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 
     @Test
