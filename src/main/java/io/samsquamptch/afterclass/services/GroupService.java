@@ -26,8 +26,8 @@ public class GroupService {
         return null;
     }
 
-    public GroupDTO updateGroup(String passCode, String name) {
-        return null;
+    public void updateGroup(String passCode, String name) {
+        return;
     }
 
     public void deleteGroup(String passCode) {

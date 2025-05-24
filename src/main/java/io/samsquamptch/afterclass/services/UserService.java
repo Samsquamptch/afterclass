@@ -26,11 +26,11 @@ public class UserService {
         return null;
     }
 
-    public UserDTO updateUser(String passCode, long id, String name) {
-        return null;
+    public void updateUser(String passCode, long id, String name) {
+
     }
 
-    public ResponseEntity<Void> deleteUser(String passCode, long id) {
-        return null;
+    public void deleteUser(String passCode, long id) {
+
     }
 }

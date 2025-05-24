@@ -90,8 +90,7 @@ public class UserApiTests {
         UserRequestDTO request = new UserRequestDTO("Seb");
         String json = objectMapper.writeValueAsString(request);
 
-        UserDTO testDTO = new UserDTO(1L, "Seb", null);
-        when(service.updateUser("zXXtpQ", 1L, "Seb")).thenReturn(testDTO);
+        doNothing().when(service).updateUser("zXXtpQ", 1L, "Seb");
 
         mvc.perform(put("/api/groups/zXXtpQ/users/1")
                         .contentType(MediaType.APPLICATION_JSON)

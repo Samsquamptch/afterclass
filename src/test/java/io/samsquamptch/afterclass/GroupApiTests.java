@@ -71,9 +71,7 @@ public class GroupApiTests {
         GroupRequestDTO request = new GroupRequestDTO("Updated Group");
         String json = objectMapper.writeValueAsString(request);
 
-        GroupDTO testDTO = new GroupDTO(1L, "Updated Group", "zXXtpQ", null);
-
-        when(service.updateGroup("zXXtpQ", "Updated Group")).thenReturn(testDTO);
+        doNothing().when(service).updateGroup("zXXtpQ", "Updated Group");
 
         mvc.perform(put("/api/groups/zXXtpQ")
                         .contentType(MediaType.APPLICATION_JSON)

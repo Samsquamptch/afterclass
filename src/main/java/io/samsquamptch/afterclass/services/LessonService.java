@@ -28,7 +28,7 @@ public class LessonService {
         return null;
     }
 
-    public LessonDTO updateLesson(long lessonId, LessonDTO lessonDTO) {
+    public ResponseEntity<Void> updateLesson(long lessonId, LessonDTO lessonDTO) {
         return null;
     }
 

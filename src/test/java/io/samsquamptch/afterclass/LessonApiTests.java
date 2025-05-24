@@ -56,7 +56,7 @@ public class LessonApiTests {
                 .andExpectAll(status().isCreated(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         jsonPath("$.lesson.id").value(1L),
-                        jsonPath("$.lesson.name").value("Test Group"),
+                        jsonPath("$.lesson.name").value("IDAR"),
                         jsonPath("$.lesson.weekDay").value(WeekDay.TUESDAY),
                         jsonPath("$.lesson.startTime").value(LocalTime.of(18, 0)),
                         jsonPath("$.lesson.endTime").value(LocalTime.of(21, 0)));
@@ -69,7 +69,22 @@ public class LessonApiTests {
 
     @Test
     void testGetLesson() throws Exception {
+        LessonDTO testDTO = new LessonDTO(1L,
+                "IDAR",
+                WeekDay.TUESDAY,
+                LocalTime.of(18, 0),
+                LocalTime.of(21, 0));
 
+        when(service.getLesson(1L)).thenReturn(testDTO);
+
+        mvc.perform(get("/api/groups/zXXtpQ/users/1/lessons/1"))
+                .andExpectAll(status().isOk(),
+                        content().contentType(MediaType.APPLICATION_JSON),
+                        jsonPath("$.lesson.id").value(1L),
+                        jsonPath("$.lesson.name").value("IDAR"),
+                        jsonPath("$.lesson.weekDay").value(WeekDay.TUESDAY),
+                        jsonPath("$.lesson.startTime").value(LocalTime.of(18, 0)),
+                        jsonPath("$.lesson.endTime").value(LocalTime.of(21, 0)));
     }
 
     @Test
