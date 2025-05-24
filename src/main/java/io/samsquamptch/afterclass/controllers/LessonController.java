@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,8 @@ public class LessonController {
     @GetMapping
     public ResponseEntity<List<LessonDTO>> getLessons(@PathVariable String passCode,
                                                       @PathVariable Long userId) {
-        return null;
+        List<LessonDTO> lessonDTOS = lessonService.getAllLessons(passCode, userId);
+        return new ResponseEntity<>(lessonDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

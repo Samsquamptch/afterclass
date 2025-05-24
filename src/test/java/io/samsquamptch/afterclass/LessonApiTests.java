@@ -85,12 +85,12 @@ public class LessonApiTests {
                         jsonPath("$.size()").value(2),
                         jsonPath("$[0].id").value(1),
                         jsonPath("$[0].name").value("IDAR"),
-                        jsonPath("$[0].weekDay").value(WeekDay.TUESDAY),
+                        jsonPath("$[0].weekDay").value("TUESDAY"),
                         jsonPath("$[0].startTime").value("18:00"),
                         jsonPath("$[0].endTime").value("21:00"),
                         jsonPath("$[1].id").value(2),
                         jsonPath("$[1].name").value("Computer Networking"),
-                        jsonPath("$[1].weekDay").value(WeekDay.WEDNESDAY),
+                        jsonPath("$[1].weekDay").value("WEDNESDAY"),
                         jsonPath("$[1].startTime").value("18:00"),
                         jsonPath("$[1].endTime").value("19:30"));
     }

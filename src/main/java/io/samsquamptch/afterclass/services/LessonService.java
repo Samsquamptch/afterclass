@@ -13,6 +13,7 @@ import io.samsquamptch.afterclass.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LessonService {
@@ -56,7 +57,16 @@ public class LessonService {
 
     public List<LessonDTO> getAllLessons(String passCode, Long userId) {
         validateUserAndGroup(passCode, userId);
-        return null;
+
+        List<Lesson> lessons = lessonRepository.findByUserId(userId);
+        return lessons.stream()
+                .map(lesson -> new LessonDTO(
+                        lesson.getId(),
+                        lesson.getName(),
+                        lesson.getWeekDay(),
+                        lesson.getStartTime(),
+                        lesson.getEndTime()))
+                .collect(Collectors.toList());
     }
 
     public void updateLesson(String passCode, Long userId, Long lessonId, LessonRequestDTO requestDTO) {
