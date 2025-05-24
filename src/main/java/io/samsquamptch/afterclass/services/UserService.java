@@ -18,11 +18,11 @@ public class UserService {
         return null;
     }
 
-    public UserDTO getUser(long id) {
+    public List<UserDTO> getAllUsers() {
         return null;
     }
 
-    public List<UserDTO> getAllUsers() {
+    public UserDTO getUser(long id) {
         return null;
     }
 

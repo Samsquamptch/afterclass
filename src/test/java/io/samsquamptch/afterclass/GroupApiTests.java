@@ -14,17 +14,15 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.springframework.http.MediaType;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(GroupController.class)
-
 public class GroupApiTests {
 
     @Autowired
@@ -50,7 +48,6 @@ public class GroupApiTests {
     void testGetGroup() throws Exception {
         GroupDTO testDTO = new GroupDTO(1, "Test Group", "zXXtpQ", null);
 
-        // mock the service to return the DTO when called with the passcode
         when(service.getGroupByPasscode("zXXtpQ")).thenReturn(testDTO);
 
         mvc.perform(get("/api/groups/zXXtpQ")).andExpectAll(status().isOk(),
@@ -71,8 +68,13 @@ public class GroupApiTests {
         mvc.perform(put("/api/groups/zXXtpQ")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.group.id").value(1))
-                .andExpect(jsonPath("$.group.name").value("Updated Group"));
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testDeleteGroup() throws Exception {
+        doNothing().when(service).deleteGroup("zXXtpQ");
+
+        mvc.perform(delete("/api/groups/zXXtpQ")).andExpect(status().isNoContent());
     }
 }

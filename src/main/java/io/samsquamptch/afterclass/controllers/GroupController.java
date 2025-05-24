@@ -23,12 +23,18 @@ public class GroupController {
         return new ResponseEntity<>(createdGroup, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public void getGroup(@PathVariable String id) {}
+    @GetMapping("/{passCode}")
+    public ResponseEntity<GroupDTO> getGroup(@PathVariable String passCode) {
+        return null;
+    }
 
-    @PutMapping("/{id}")
-    public void updateGroup(@PathVariable String id) {}
+    @PutMapping("/{passCode}")
+    public ResponseEntity<Void> updateGroup(@PathVariable String passCode, @RequestBody GroupRequestDTO request) {
+        return null;
+    }
 
-    @DeleteMapping("/{id}")
-    public void deleteGroup(@PathVariable String id) {}
+    @DeleteMapping("/{passCode}")
+    public ResponseEntity<Void> deleteGroup(@PathVariable String passCode) {
+        return null;
+    }
 }

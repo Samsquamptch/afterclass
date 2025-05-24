@@ -32,7 +32,7 @@ public class GroupService {
         return null;
     }
 
-    public ResponseEntity<Void> deleteGroup(String passCode) {
-        return null;
+    public void deleteGroup(String passCode) {
+        return;
     }
 }
