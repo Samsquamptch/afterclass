@@ -5,6 +5,7 @@ import io.samsquamptch.afterclass.controllers.GroupController;
 import io.samsquamptch.afterclass.dto.GroupRequestDTO;
 import io.samsquamptch.afterclass.dto.GroupDTO;
 import io.samsquamptch.afterclass.services.GroupService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,12 +35,18 @@ public class GroupApiTests {
     @MockitoBean
     private GroupService service;
 
+    private GroupRequestDTO request;
+    private GroupDTO testDTO;
+
+    @BeforeEach
+    public void setup() {
+        request = new GroupRequestDTO("Test Group");
+        testDTO = new GroupDTO(1L, "Test Group", "zXXtpQ", null);
+    }
+
     @Test
     void testCreateGroup() throws Exception {
-        GroupRequestDTO request = new GroupRequestDTO("Test Group");
         String json = objectMapper.writeValueAsString(request);
-
-        GroupDTO testDTO = new GroupDTO(1L, "Test Group", "zXXtpQ", null);
 
         when(service.createGroup("Test Group")).thenReturn(testDTO);
 
@@ -48,30 +55,27 @@ public class GroupApiTests {
                         .content(json))
                 .andExpectAll(status().isCreated(),
                         content().contentType(MediaType.APPLICATION_JSON),
-                        jsonPath("$.group.id").value(1L),
-                        jsonPath("$.group.name").value("Test Group"),
-                        jsonPath("$.group.passCode").value("zXXtpQ"));
+                        jsonPath("$.id").value(1L),
+                        jsonPath("$.name").value("Test Group"),
+                        jsonPath("$.passCode").value("zXXtpQ"));
     }
 
     @Test
     void testGetGroup() throws Exception {
-        GroupDTO testDTO = new GroupDTO(1L, "Test Group", "zXXtpQ", null);
-
         when(service.getGroupByPasscode("zXXtpQ")).thenReturn(testDTO);
 
         mvc.perform(get("/api/groups/zXXtpQ"))
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
-                        jsonPath("$.group.id").value(1L),
-                        jsonPath("$.group.name").value("Test Group"));
+                        jsonPath("$.id").value(1L),
+                        jsonPath("$.name").value("Test Group"));
     }
 
     @Test
     void testUpdateGroup() throws Exception {
-        GroupRequestDTO request = new GroupRequestDTO("Updated Group");
         String json = objectMapper.writeValueAsString(request);
 
-        doNothing().when(service).updateGroup("zXXtpQ", "Updated Group");
+        doNothing().when(service).updateGroup("zXXtpQ", "Test Group");
 
         mvc.perform(put("/api/groups/zXXtpQ")
                         .contentType(MediaType.APPLICATION_JSON)
