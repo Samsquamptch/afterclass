@@ -2,6 +2,7 @@ package io.samsquamptch.afterclass.services;
 
 import io.samsquamptch.afterclass.Lesson;
 import io.samsquamptch.afterclass.dto.LessonDTO;
+import io.samsquamptch.afterclass.dto.LessonRequestDTO;
 import io.samsquamptch.afterclass.repositories.LessonRepository;
 import org.springframework.http.ResponseEntity;
 
@@ -15,7 +16,7 @@ public class LessonService {
         this.lessonRepository = lessonRepository;
     }
 
-    public LessonDTO createLesson() {
+    public LessonDTO createLesson(String passCode, Long userId, LessonRequestDTO requestDTO) {
         return null;
     }
 

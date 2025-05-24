@@ -1,7 +1,7 @@
 package io.samsquamptch.afterclass;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.samsquamptch.afterclass.controllers.GroupController;
+import io.samsquamptch.afterclass.controllers.UserController;
 import io.samsquamptch.afterclass.dto.UserRequestDTO;
 import io.samsquamptch.afterclass.dto.UserDTO;
 import io.samsquamptch.afterclass.services.UserService;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(GroupController.class)
+@WebMvcTest(UserController.class)
 public class UserApiTests {
     @Autowired
     private MockMvc mvc;
@@ -41,7 +41,7 @@ public class UserApiTests {
 
         UserDTO testDTO = new UserDTO(1L, "Cian", null);
 
-        when(service.createUser("Cian")).thenReturn(testDTO);
+        when(service.createUser("zXXtpQ","Cian")).thenReturn(testDTO);
 
         mvc.perform(post("/api/groups/zXXtpQ/users")
                         .contentType(MediaType.APPLICATION_JSON)

@@ -14,7 +14,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserDTO createUser(String name) {
+    public UserDTO createUser(String passCode, String name) {
         return null;
     }
 
