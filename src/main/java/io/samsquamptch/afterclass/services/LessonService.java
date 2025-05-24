@@ -29,15 +29,8 @@ public class LessonService {
     }
 
     public LessonDTO createLesson(String passCode, Long userId, LessonRequestDTO request) {
-        Group group = groupRepository.findByPassCode(passCode)
-                .orElseThrow(() -> new NotFoundException("Group not found"));
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("User not found"));
-
-        if (user.getGroup().getId() != group.getId()) {
-            throw new IllegalArgumentException("User does not belong to the group");
-        }
+        validateUserAndGroup(passCode, userId);
+        User user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
 
         Lesson lesson  = new Lesson(request.getName(), request.getWeekDay(), request.getStartTime(), request.getEndTime());
         lesson.setUser(user);
@@ -50,10 +43,19 @@ public class LessonService {
     }
 
     public LessonDTO getLesson(String passCode, Long userId, long lessonId) {
-        return null;
+        validateUserAndGroup(passCode, userId);
+
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(NotFoundException::new);
+        return new LessonDTO(lesson.getId(),
+                lesson.getName(),
+                lesson.getWeekDay(),
+                lesson.getStartTime(),
+                lesson.getEndTime());
+
     }
 
     public List<LessonDTO> getAllLessons(String passCode, Long userId) {
+        validateUserAndGroup(passCode, userId);
         return null;
     }
 
@@ -61,5 +63,15 @@ public class LessonService {
     }
 
     public void deleteLesson(String passCode, Long userId, long lessonId) {
+    }
+
+    private void validateUserAndGroup(String passCode, Long userId) {
+        Group group = groupRepository.findByPassCode(passCode)
+                .orElseThrow(() -> new NotFoundException("Group not found"));
+
+        boolean isValid = userRepository.existsByIdAndGroupId(userId, group.getId());
+        if (!isValid) {
+            throw new IllegalArgumentException("User does not belong to the group");
+        }
     }
 }

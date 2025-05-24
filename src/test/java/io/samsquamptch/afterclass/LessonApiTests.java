@@ -102,11 +102,11 @@ public class LessonApiTests {
         mvc.perform(get("/api/groups/zXXtpQ/users/1/lessons/1"))
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
-                        jsonPath("$.lesson.id").value(1L),
-                        jsonPath("$.lesson.name").value("IDAR"),
-                        jsonPath("$.lesson.weekDay").value(WeekDay.TUESDAY),
-                        jsonPath("$.lesson.startTime").value(LocalTime.of(18, 0)),
-                        jsonPath("$.lesson.endTime").value(LocalTime.of(21, 0)));
+                        jsonPath("$.id").value(1L),
+                        jsonPath("$.name").value("IDAR"),
+                        jsonPath("$.weekDay").value("TUESDAY"),
+                        jsonPath("$.startTime").value("18:00"),
+                        jsonPath("$.endTime").value("21:00"));
     }
 
     @Test

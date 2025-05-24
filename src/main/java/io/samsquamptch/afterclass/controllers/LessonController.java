@@ -35,7 +35,8 @@ public class LessonController {
     public ResponseEntity<LessonDTO> getLesson(@PathVariable String passCode,
                           @PathVariable Long userId,
                           @PathVariable Long id) {
-        return null;
+        LessonDTO lessonDTO = lessonService.getLesson(passCode, userId, id);
+        return new ResponseEntity<>(lessonDTO, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
