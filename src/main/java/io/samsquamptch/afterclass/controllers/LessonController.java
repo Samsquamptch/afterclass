@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/groups/{passCode}/users/{userId}/lessons")
+@RequestMapping("/api/groups/{groupId}/users/{userId}/lessons")
 public class LessonController {
 
     LessonService lessonService;
@@ -18,42 +18,42 @@ public class LessonController {
     public LessonController(LessonService lessonService) {this.lessonService = lessonService;}
 
     @PostMapping()
-    public ResponseEntity<LessonDTO> createLesson(@PathVariable String passCode,
+    public ResponseEntity<LessonDTO> createLesson(@PathVariable Long groupId,
                                                  @PathVariable Long userId,
                                                  @RequestBody LessonRequestDTO request) {
-        LessonDTO lessonDTO = lessonService.createLesson(passCode, userId, request);
+        LessonDTO lessonDTO = lessonService.createLesson(groupId, userId, request);
         return new ResponseEntity<>(lessonDTO, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<LessonDTO>> getLessons(@PathVariable String passCode,
+    public ResponseEntity<List<LessonDTO>> getLessons(@PathVariable Long groupId,
                                                       @PathVariable Long userId) {
-        List<LessonDTO> lessonDTOS = lessonService.getAllLessons(passCode, userId);
+        List<LessonDTO> lessonDTOS = lessonService.getAllLessons(groupId, userId);
         return new ResponseEntity<>(lessonDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LessonDTO> getLesson(@PathVariable String passCode,
+    public ResponseEntity<LessonDTO> getLesson(@PathVariable Long groupId,
                           @PathVariable Long userId,
                           @PathVariable Long id) {
-        LessonDTO lessonDTO = lessonService.getLesson(passCode, userId, id);
+        LessonDTO lessonDTO = lessonService.getLesson(groupId, userId, id);
         return new ResponseEntity<>(lessonDTO, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateLesson(@PathVariable String passCode,
+    public ResponseEntity<Void> updateLesson(@PathVariable Long groupId,
                              @PathVariable Long userId,
                              @PathVariable Long id,
                              @RequestBody LessonRequestDTO request) {
-        lessonService.updateLesson(passCode, userId, id, request);
+        lessonService.updateLesson(groupId, userId, id, request);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLessons(@PathVariable String passCode,
+    public ResponseEntity<Void> deleteLessons(@PathVariable Long groupId,
                               @PathVariable Long userId,
                               @PathVariable Long id) {
-        lessonService.deleteLesson(passCode, userId, id);
+        lessonService.deleteLesson(groupId, userId, id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

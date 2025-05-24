@@ -56,7 +56,7 @@ public class LessonApiTests {
     void testCreateLesson() throws Exception {
         String json = objectMapper.writeValueAsString(request);
 
-        when(service.createLesson("zXXtpQ", 1L, request)).thenReturn(testDTO);
+        when(service.createLesson(1L, 1L, request)).thenReturn(testDTO);
         mvc.perform(post("/api/groups/zXXtpQ/users/1/lessons")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -78,7 +78,7 @@ public class LessonApiTests {
                 LocalTime.of(19, 30));
         List<LessonDTO> testDTOs = List.of(testDTO, testDTO2);
 
-        when(service.getAllLessons("zXXtpQ", 1L)).thenReturn(testDTOs);
+        when(service.getAllLessons(1L, 1L)).thenReturn(testDTOs);
 
         mvc.perform(get("/api/groups/zXXtpQ/users/1/lessons"))
                 .andExpectAll(status().isOk(),
@@ -97,7 +97,7 @@ public class LessonApiTests {
 
     @Test
     void testGetLesson() throws Exception {
-        when(service.getLesson("zXXtpQ", 1L, 1L)).thenReturn(testDTO);
+        when(service.getLesson(1L, 1L, 1L)).thenReturn(testDTO);
 
         mvc.perform(get("/api/groups/zXXtpQ/users/1/lessons/1"))
                 .andExpectAll(status().isOk(),
@@ -113,7 +113,7 @@ public class LessonApiTests {
     void testUpdateLesson() throws Exception {
         String json = objectMapper.writeValueAsString(request);
 
-        doNothing().when(service).updateLesson("zXXtpQ", 1L, 1L, request);
+        doNothing().when(service).updateLesson(1L, 1L, 1L, request);
 
         mvc.perform(put("/api/groups/zXXtpQ/users/1/lessons/1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -123,7 +123,7 @@ public class LessonApiTests {
 
     @Test
     void testDeleteLesson() throws Exception {
-        doNothing().when(service).deleteLesson("zXXtpQ", 1L, 1L);
+        doNothing().when(service).deleteLesson(1L, 1L, 1L);
 
         mvc.perform(delete("/api/groups/zXXtpQ/users/1/lessons/1")).andExpect(status().isNoContent());
     }
