@@ -25,19 +25,19 @@ public class GroupService {
         return new GroupDTO(savedGroup.getId(), savedGroup.getName(), savedGroup.getPassCode(), null);
     }
 
-    public GroupDTO getGroupByPasscode(String passcode) {
-        Optional<Group> group = groupRepository.findByPassCode(passcode);
+    public GroupDTO getGroup(Long id) {
+        Optional<Group> group = groupRepository.findGroupById(id);
         Group groupEntity = group
                 .orElseThrow(() -> new NotFoundException("Group not found"));
         return new GroupDTO(groupEntity.getId(), groupEntity.getName(), groupEntity.getPassCode(), null);
 
     }
 
-    public void updateGroup(String passCode, String name) {
+    public void updateGroup(Long id, String name) {
         return;
     }
 
-    public void deleteGroup(String passCode) {
+    public void deleteGroup(Long id) {
         return;
     }
 }
