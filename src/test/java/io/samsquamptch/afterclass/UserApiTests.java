@@ -83,8 +83,8 @@ public class UserApiTests {
         mvc.perform(get("/api/groups/1/users/1"))
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
-                        jsonPath("$.user.id").value(1L),
-                        jsonPath("$.user.name").value("Cian"));
+                        jsonPath("$.id").value(1L),
+                        jsonPath("$.name").value("Cian"));
     }
 
     @Test

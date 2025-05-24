@@ -30,7 +30,8 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long groupId, @PathVariable Long id) {
-        return null;
+        UserDTO userDTO = userService.getUser(groupId, id);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

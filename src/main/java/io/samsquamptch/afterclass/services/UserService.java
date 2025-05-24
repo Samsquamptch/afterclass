@@ -36,7 +36,10 @@ public class UserService {
     }
 
     public UserDTO getUser(Long groupId, Long id) {
-        return null;
+        validateUserAndGroup(groupId, id);
+
+        User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
+        return new UserDTO(user.getId(), user.getName(), new ArrayList<>());
     }
 
     public void updateUser(Long groupId, Long id, String name) {
@@ -45,5 +48,12 @@ public class UserService {
 
     public void deleteUser(Long groupId, Long id) {
 
+    }
+
+    private void validateUserAndGroup(Long groupId, Long userId) {
+        boolean isValid = userRepository.existsByIdAndGroupId(userId, groupId);
+        if (!isValid) {
+            throw new IllegalArgumentException("User does not belong to group");
+        }
     }
 }
