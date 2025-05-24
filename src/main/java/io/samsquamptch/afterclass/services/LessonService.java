@@ -70,6 +70,13 @@ public class LessonService {
     }
 
     public void updateLesson(String passCode, Long userId, Long lessonId, LessonRequestDTO requestDTO) {
+        validateUserAndGroup(passCode, userId);
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(NotFoundException::new);
+        lesson.setName(requestDTO.getName());
+        lesson.setWeekDay(requestDTO.getWeekDay());
+        lesson.setStartTime(requestDTO.getStartTime());
+        lesson.setEndTime(requestDTO.getEndTime());
+        lessonRepository.save(lesson);
     }
 
     public void deleteLesson(String passCode, Long userId, long lessonId) {

@@ -46,7 +46,8 @@ public class LessonController {
                              @PathVariable Long userId,
                              @PathVariable Long id,
                              @RequestBody LessonRequestDTO request) {
-        return null;
+        lessonService.updateLesson(passCode, userId, id, request);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{id}")
