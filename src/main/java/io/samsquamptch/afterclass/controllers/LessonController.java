@@ -2,6 +2,8 @@ package io.samsquamptch.afterclass.controllers;
 
 import io.samsquamptch.afterclass.dto.LessonDTO;
 import io.samsquamptch.afterclass.dto.LessonRequestDTO;
+import io.samsquamptch.afterclass.services.LessonService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,11 +12,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/groups/{passCode}/users/{userId}/lessons")
 public class LessonController {
+
+    LessonService lessonService;
+
+    public LessonController(LessonService lessonService) {this.lessonService = lessonService;}
+
     @PostMapping()
-    public ResponseEntity<LessonDTO> createClass(@PathVariable String passCode,
+    public ResponseEntity<LessonDTO> createLesson(@PathVariable String passCode,
                                                  @PathVariable Long userId,
                                                  @RequestBody LessonRequestDTO request) {
-        return null;
+        LessonDTO lessonDTO = lessonService.createLesson(passCode, userId, request);
+        return new ResponseEntity<>(lessonDTO, HttpStatus.CREATED);
     }
 
     @GetMapping

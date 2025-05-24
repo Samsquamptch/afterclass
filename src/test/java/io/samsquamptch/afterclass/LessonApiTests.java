@@ -62,11 +62,11 @@ public class LessonApiTests {
                         .content(json))
                 .andExpectAll(status().isCreated(),
                         content().contentType(MediaType.APPLICATION_JSON),
-                        jsonPath("$.lesson.id").value(1L),
-                        jsonPath("$.lesson.name").value("IDAR"),
-                        jsonPath("$.lesson.weekDay").value(WeekDay.TUESDAY),
-                        jsonPath("$.lesson.startTime").value(LocalTime.of(18, 0)),
-                        jsonPath("$.lesson.endTime").value(LocalTime.of(21, 0)));
+                        jsonPath("$.id").value(1L),
+                        jsonPath("$.name").value("IDAR"),
+                        jsonPath("$.weekDay").value("TUESDAY"),
+                        jsonPath("$.startTime").value("18:00"),
+                        jsonPath("$.endTime").value("21:00"));
     }
 
     @Test
@@ -86,13 +86,13 @@ public class LessonApiTests {
                         jsonPath("$[0].id").value(1),
                         jsonPath("$[0].name").value("IDAR"),
                         jsonPath("$[0].weekDay").value(WeekDay.TUESDAY),
-                        jsonPath("$[0].startTime").value(LocalTime.of(18,0)),
-                        jsonPath("$[0].endTime").value(LocalTime.of(21,0)),
+                        jsonPath("$[0].startTime").value("18:00"),
+                        jsonPath("$[0].endTime").value("21:00"),
                         jsonPath("$[1].id").value(2),
                         jsonPath("$[1].name").value("Computer Networking"),
                         jsonPath("$[1].weekDay").value(WeekDay.WEDNESDAY),
-                        jsonPath("$[1].startTime").value(LocalTime.of(18,0)),
-                        jsonPath("$[1].endTime").value(LocalTime.of(19,30)));
+                        jsonPath("$[1].startTime").value("18:00"),
+                        jsonPath("$[1].endTime").value("19:30"));
     }
 
     @Test
