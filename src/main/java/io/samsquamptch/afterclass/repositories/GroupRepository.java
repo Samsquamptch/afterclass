@@ -11,7 +11,5 @@ public interface GroupRepository extends JpaRepository <Group, Long> {
 
     Optional<Group> findByPassCode(String passCode);
 
-    Boolean existsGroupByPassCode(String groupName);
-
     Optional<Group> findGroupById(long id);
 }

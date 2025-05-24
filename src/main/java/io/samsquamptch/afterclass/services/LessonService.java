@@ -1,11 +1,9 @@
 package io.samsquamptch.afterclass.services;
 
-import io.samsquamptch.afterclass.Group;
 import io.samsquamptch.afterclass.Lesson;
 import io.samsquamptch.afterclass.User;
 import io.samsquamptch.afterclass.dto.LessonDTO;
 import io.samsquamptch.afterclass.dto.LessonRequestDTO;
-import io.samsquamptch.afterclass.dto.PassCodeDTO;
 import io.samsquamptch.afterclass.exception.NotFoundException;
 import io.samsquamptch.afterclass.repositories.GroupRepository;
 import io.samsquamptch.afterclass.repositories.LessonRepository;
@@ -22,12 +20,10 @@ public class LessonService {
     private final LessonRepository lessonRepository;
     // Replace these with services once they've been set up
     private final UserRepository userRepository;
-    private final GroupRepository groupRepository;
 
     public LessonService(LessonRepository lessonRepository, UserRepository userRepository, GroupRepository groupRepository) {
         this.lessonRepository = lessonRepository;
         this.userRepository = userRepository;
-        this.groupRepository = groupRepository;
     }
 
     public LessonDTO createLesson(Long groupId, Long userId, LessonRequestDTO request) {
@@ -46,6 +42,7 @@ public class LessonService {
 
     public LessonDTO getLesson(Long groupId, Long userId, long lessonId) {
         validateUserAndGroup(groupId, userId);
+        validateLessonAndUser(lessonId, userId);
 
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(NotFoundException::new);
         return new LessonDTO(lesson.getId(),
@@ -72,6 +69,7 @@ public class LessonService {
 
     public void updateLesson(Long groupId, Long userId, Long lessonId, LessonRequestDTO requestDTO) {
         validateUserAndGroup(groupId, userId);
+        validateLessonAndUser(lessonId, userId);
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(NotFoundException::new);
         lesson.setName(requestDTO.getName());
         lesson.setWeekDay(requestDTO.getWeekDay());
@@ -82,14 +80,21 @@ public class LessonService {
 
     public void deleteLesson(Long groupId, Long userId, Long lessonId) {
         validateUserAndGroup(groupId, userId);
+        validateLessonAndUser(lessonId, userId);
         lessonRepository.deleteById(lessonId);
     }
 
     private void validateUserAndGroup(Long groupId, Long userId) {
-
         boolean isValid = userRepository.existsByIdAndGroupId(userId, groupId);
         if (!isValid) {
-            throw new IllegalArgumentException("User does not belong to the group");
+            throw new IllegalArgumentException("User does not belong to group");
+        }
+    }
+
+    private void validateLessonAndUser(Long lessonId, Long userId) {
+        boolean isValid = lessonRepository.existsByIdAndUserId(lessonId, userId);
+        if (!isValid) {
+            throw new IllegalArgumentException("Lesson does not belong to user");
         }
     }
 }
