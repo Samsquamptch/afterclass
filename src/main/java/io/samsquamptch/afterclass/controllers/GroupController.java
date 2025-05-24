@@ -1,6 +1,6 @@
 package io.samsquamptch.afterclass.controllers;
 
-import io.samsquamptch.afterclass.dto.CreateGroupRequest;
+import io.samsquamptch.afterclass.dto.GroupRequestDTO;
 import io.samsquamptch.afterclass.dto.GroupDTO;
 import io.samsquamptch.afterclass.services.GroupService;
 import org.springframework.http.HttpStatus;
@@ -18,17 +18,23 @@ public class GroupController {
     }
     
     @PostMapping()
-    public ResponseEntity<GroupDTO> createGroup(@RequestBody CreateGroupRequest request) {
-        GroupDTO createdGroup = groupService.createGroup(request);
+    public ResponseEntity<GroupDTO> createGroup(@RequestBody GroupRequestDTO request) {
+        GroupDTO createdGroup = groupService.createGroup(request.getName());
         return new ResponseEntity<>(createdGroup, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public void getGroup(@PathVariable String id) {}
+    @GetMapping("/{passCode}")
+    public ResponseEntity<GroupDTO> getGroup(@PathVariable String passCode) {
+        return null;
+    }
 
-    @PutMapping("/{id}")
-    public void updateGroup(@PathVariable String id) {}
+    @PutMapping("/{passCode}")
+    public ResponseEntity<Void> updateGroup(@PathVariable String passCode, @RequestBody GroupRequestDTO request) {
+        return null;
+    }
 
-    @DeleteMapping("/{id}")
-    public void deleteGroup(@PathVariable String id) {}
+    @DeleteMapping("/{passCode}")
+    public ResponseEntity<Void> deleteGroup(@PathVariable String passCode) {
+        return null;
+    }
 }

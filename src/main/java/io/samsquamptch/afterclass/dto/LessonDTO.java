@@ -1,17 +1,19 @@
 package io.samsquamptch.afterclass.dto;
 
+import io.samsquamptch.afterclass.WeekDay;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GroupDTO {
+public class LessonDTO {
     private long id;
     private String name;
-    private String passCode;
-    private List<UserDTO> users;
+    private WeekDay weekDay;
+    private LocalTime startTime;
+    private LocalTime endTime;
 }
