@@ -50,7 +50,6 @@ public class LessonService {
                 lesson.getWeekDay(),
                 lesson.getStartTime(),
                 lesson.getEndTime());
-
     }
 
     public List<LessonDTO> getAllLessons(Long groupId, Long userId) {
@@ -70,6 +69,7 @@ public class LessonService {
     public void updateLesson(Long groupId, Long userId, Long lessonId, LessonRequestDTO requestDTO) {
         validateUserAndGroup(groupId, userId);
         validateLessonAndUser(lessonId, userId);
+
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(NotFoundException::new);
         lesson.setName(requestDTO.getName());
         lesson.setWeekDay(requestDTO.getWeekDay());

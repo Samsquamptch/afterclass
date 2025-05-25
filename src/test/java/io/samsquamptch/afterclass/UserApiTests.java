@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
@@ -39,17 +40,18 @@ public class UserApiTests {
         UserRequestDTO request = new UserRequestDTO("Cian");
         String json = objectMapper.writeValueAsString(request);
 
-        UserDTO testDTO = new UserDTO(1L, "Cian", null);
+        UserDTO testDTO = new UserDTO(1L, "Cian", new ArrayList<>());
 
         when(service.createUser(1L,"Cian")).thenReturn(testDTO);
 
-        mvc.perform(post("/api/groups/zXXtpQ/users")
+        mvc.perform(post("/api/groups/1/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpectAll(status().isCreated(),
                         content().contentType(MediaType.APPLICATION_JSON),
-                        jsonPath("$.user.id").value(1L),
-                        jsonPath("$.user.name").value("Cian"));
+                        jsonPath("$.id").value(1L),
+                        jsonPath("$.name").value("Cian"),
+                        jsonPath("$.lessons.size()").value(0));
     }
 
     @Test
@@ -61,7 +63,7 @@ public class UserApiTests {
 
         when(service.getAllUsers(1L)).thenReturn(testDTOs);
 
-        mvc.perform(get("/api/groups/zXXtpQ/users"))
+        mvc.perform(get("/api/groups/1/users"))
                 .andExpectAll(status().isOk(),
                         jsonPath("$.size()").value(3),
                         jsonPath("$[0].id").value(1),
@@ -78,11 +80,11 @@ public class UserApiTests {
 
         when(service.getUser(1L, 1L)).thenReturn(testDTO);
 
-        mvc.perform(get("/api/groups/zXXtpQ/users/1"))
+        mvc.perform(get("/api/groups/1/users/1"))
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
-                        jsonPath("$.user.id").value(1L),
-                        jsonPath("$.user.name").value("Cian"));
+                        jsonPath("$.id").value(1L),
+                        jsonPath("$.name").value("Cian"));
     }
 
     @Test
@@ -92,7 +94,7 @@ public class UserApiTests {
 
         doNothing().when(service).updateUser(1L, 1L, "Seb");
 
-        mvc.perform(put("/api/groups/zXXtpQ/users/1")
+        mvc.perform(put("/api/groups/1/users/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNoContent());
@@ -102,6 +104,6 @@ public class UserApiTests {
     void testDeleteUser() throws Exception {
         doNothing().when(service).deleteUser(1L, 1L);
 
-        mvc.perform(delete("/api/groups/zXXtpQ/users/1")).andExpect(status().isNoContent());
+        mvc.perform(delete("/api/groups/1/users/1")).andExpect(status().isNoContent());
     }
 }

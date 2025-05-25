@@ -57,7 +57,7 @@ public class LessonApiTests {
         String json = objectMapper.writeValueAsString(request);
 
         when(service.createLesson(1L, 1L, request)).thenReturn(testDTO);
-        mvc.perform(post("/api/groups/zXXtpQ/users/1/lessons")
+        mvc.perform(post("/api/groups/1/users/1/lessons")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpectAll(status().isCreated(),
@@ -80,7 +80,7 @@ public class LessonApiTests {
 
         when(service.getAllLessons(1L, 1L)).thenReturn(testDTOs);
 
-        mvc.perform(get("/api/groups/zXXtpQ/users/1/lessons"))
+        mvc.perform(get("/api/groups/1/users/1/lessons"))
                 .andExpectAll(status().isOk(),
                         jsonPath("$.size()").value(2),
                         jsonPath("$[0].id").value(1),
@@ -99,7 +99,7 @@ public class LessonApiTests {
     void testGetLesson() throws Exception {
         when(service.getLesson(1L, 1L, 1L)).thenReturn(testDTO);
 
-        mvc.perform(get("/api/groups/zXXtpQ/users/1/lessons/1"))
+        mvc.perform(get("/api/groups/1/users/1/lessons/1"))
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         jsonPath("$.id").value(1L),
@@ -115,7 +115,7 @@ public class LessonApiTests {
 
         doNothing().when(service).updateLesson(1L, 1L, 1L, request);
 
-        mvc.perform(put("/api/groups/zXXtpQ/users/1/lessons/1")
+        mvc.perform(put("/api/groups/1/users/1/lessons/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isNoContent());
@@ -125,6 +125,6 @@ public class LessonApiTests {
     void testDeleteLesson() throws Exception {
         doNothing().when(service).deleteLesson(1L, 1L, 1L);
 
-        mvc.perform(delete("/api/groups/zXXtpQ/users/1/lessons/1")).andExpect(status().isNoContent());
+        mvc.perform(delete("/api/groups/1/users/1/lessons/1")).andExpect(status().isNoContent());
     }
 }

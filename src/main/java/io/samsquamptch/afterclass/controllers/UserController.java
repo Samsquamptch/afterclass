@@ -2,6 +2,8 @@ package io.samsquamptch.afterclass.controllers;
 
 import io.samsquamptch.afterclass.dto.UserDTO;
 import io.samsquamptch.afterclass.dto.UserRequestDTO;
+import io.samsquamptch.afterclass.services.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,34 +13,39 @@ import java.util.List;
 @RequestMapping("/api/groups/{groupId}/users")
 public class UserController {
 
+    UserService userService;
+
+    public UserController(UserService userService) {this.userService = userService;}
+
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@PathVariable Long groupId, @RequestBody UserRequestDTO request) {
-        return null;
+        UserDTO createdUser = userService.createUser(groupId, request.getName());
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getUsers(@PathVariable Long groupId) {
-        return null;
+        List<UserDTO> userDTOs = userService.getAllUsers(groupId);
+        return new ResponseEntity<>(userDTOs, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long groupId, @PathVariable Long id) {
-        return null;
+        UserDTO userDTO = userService.getUser(groupId, id);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long groupId,
-                                              @PathVariable Long id,
-                                              @RequestBody UserRequestDTO request) {
-        return null;
-    }
-
-    @DeleteMapping("/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable Long groupId,
                                            @PathVariable Long id,
                                            @RequestBody UserRequestDTO request) {
-        return null;
+        userService.updateUser(groupId, id, request.getName());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long groupId, @PathVariable Long id) {
+        userService.deleteUser(groupId, id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
