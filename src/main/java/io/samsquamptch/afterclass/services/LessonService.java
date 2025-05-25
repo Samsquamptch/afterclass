@@ -20,7 +20,7 @@ public class LessonService {
     private final LessonRepository lessonRepository;
     private final UserRepository userRepository;
 
-    public LessonService(LessonRepository lessonRepository, UserRepository userRepository, GroupRepository groupRepository) {
+    public LessonService(LessonRepository lessonRepository, UserRepository userRepository) {
         this.lessonRepository = lessonRepository;
         this.userRepository = userRepository;
     }

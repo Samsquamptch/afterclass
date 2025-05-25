@@ -2,7 +2,6 @@ package io.samsquamptch.afterclass.controllers;
 
 import io.samsquamptch.afterclass.dto.GroupRequestDTO;
 import io.samsquamptch.afterclass.dto.GroupDTO;
-import io.samsquamptch.afterclass.dto.PassCodeDTO;
 import io.samsquamptch.afterclass.services.GroupService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
