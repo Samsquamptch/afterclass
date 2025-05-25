@@ -41,7 +41,7 @@ public class GroupService {
     }
 
     public void deleteGroup(Long id) {
-        return;
+        groupRepository.deleteById(id);
     }
 
     private List<UserDTO> getUsersFromGroup(Long groupId) {

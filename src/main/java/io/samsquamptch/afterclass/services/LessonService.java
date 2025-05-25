@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 public class LessonService {
 
     private final LessonRepository lessonRepository;
-    // Replace these with services once they've been set up
     private final UserRepository userRepository;
 
     public LessonService(LessonRepository lessonRepository, UserRepository userRepository, GroupRepository groupRepository) {
