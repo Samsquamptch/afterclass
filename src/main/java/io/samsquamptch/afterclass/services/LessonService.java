@@ -79,7 +79,8 @@ public class LessonService {
     public void deleteLesson(Long groupId, Long userId, Long lessonId) {
         validateUserAndGroup(groupId, userId);
         validateLessonAndUser(lessonId, userId);
-        lessonRepository.deleteById(lessonId);
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(NotFoundException::new);
+        lessonRepository.delete(lesson);
     }
 
     private void validateUserAndGroup(Long groupId, Long userId) {

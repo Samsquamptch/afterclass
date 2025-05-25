@@ -26,7 +26,7 @@ public class Lesson {
     private LocalTime endTime;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")  // Foreign key to Group
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Lesson(String name, WeekDay weekDay, LocalTime startTime, LocalTime endTime) {

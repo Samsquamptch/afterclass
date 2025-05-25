@@ -26,14 +26,18 @@ public class User {
     @Setter
     private Group group;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private final List<Lesson> lessons = new ArrayList<>();
 
     public User(String name) {
         this.name = name;
     }
 
-    public void addLesson(Lesson lesson) {this.lessons.add(lesson);}
+    public void addLesson(Lesson lesson) {
+        this.lessons.add(lesson);
+        lesson.setUser(this);}
 
-    public void removeLesson(Lesson lesson) {this.lessons.remove(lesson);}
+    public void removeLesson(Lesson lesson) {
+        this.lessons.remove(lesson);
+        lesson.setUser(null);}
 }
