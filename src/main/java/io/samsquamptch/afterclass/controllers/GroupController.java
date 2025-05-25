@@ -25,8 +25,9 @@ public class GroupController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GroupDTO> getGroup(@PathVariable Long id, @RequestBody PassCodeDTO passCode) {
-        return null;
+    public ResponseEntity<GroupDTO> getGroup(@PathVariable Long id) {
+        GroupDTO group = groupService.getGroup(id);
+        return new ResponseEntity<>(group, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -35,7 +36,7 @@ public class GroupController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGroup(@PathVariable Long id, @RequestBody PassCodeDTO passCode) {
+    public ResponseEntity<Void> deleteGroup(@PathVariable Long id) {
         return null;
     }
 }
