@@ -1,4 +1,4 @@
-package io.samsquamptch.afterclass;
+package io.samsquamptch.afterclass.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.samsquamptch.afterclass.controllers.GroupController;
@@ -24,7 +24,7 @@ import org.springframework.http.MediaType;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(GroupController.class)
-public class GroupApiTests {
+public class GroupControllerTests {
 
     @Autowired
     private MockMvc mvc;

@@ -1,6 +1,7 @@
-package io.samsquamptch.afterclass;
+package io.samsquamptch.afterclass.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.samsquamptch.afterclass.WeekDay;
 import io.samsquamptch.afterclass.controllers.LessonController;
 import io.samsquamptch.afterclass.dto.LessonDTO;
 import io.samsquamptch.afterclass.dto.LessonRequestDTO;
@@ -26,7 +27,7 @@ import java.time.LocalTime;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(LessonController.class)
-public class LessonApiTests {
+public class LessonControllerTests {
     @Autowired
     private MockMvc mvc;
 
