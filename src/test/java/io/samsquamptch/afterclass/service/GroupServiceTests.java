@@ -1,6 +1,5 @@
 package io.samsquamptch.afterclass.service;
 
-import io.samsquamptch.afterclass.Group;
 import io.samsquamptch.afterclass.dto.GroupDTO;
 import io.samsquamptch.afterclass.services.GroupService;
 import jakarta.transaction.Transactional;

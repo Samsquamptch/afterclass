@@ -37,8 +37,8 @@ public class LessonServiceTests extends AbstractIntegrationTests {
     public void GetAllLessons() {
         List<LessonDTO> lessonDTOs = lessonService.getAllLessons(1L, 1L);
         assertEquals(2, lessonDTOs.size());
-        assertEquals("Business Law", lessonDTOs.get(0).getName());
-        assertEquals(WeekDay.FRIDAY, lessonDTOs.get(0).getWeekDay());
+        assertEquals("Business Law", lessonDTOs.getFirst().getName());
+        assertEquals(WeekDay.FRIDAY, lessonDTOs.getFirst().getWeekDay());
         assertEquals(LocalTime.of(18,0), lessonDTOs.get(0).getStartTime());
         assertEquals(LocalTime.of(21,0), lessonDTOs.get(0).getEndTime());
         assertEquals("Finance", lessonDTOs.get(1).getName());
