@@ -1,5 +1,6 @@
 package io.samsquamptch.afterclass.service;
 
+import io.samsquamptch.afterclass.Group;
 import io.samsquamptch.afterclass.dto.GroupDTO;
 import io.samsquamptch.afterclass.services.GroupService;
 import jakarta.transaction.Transactional;
@@ -27,16 +28,22 @@ public class GroupServiceTests extends AbstractIntegrationTests {
     @Test
     void addGroup() {
         GroupDTO groupDTO = groupService.createGroup("Birkbeck Socials");
+        System.out.println(groupDTO.getPassCode());
         assertEquals(2L, groupDTO.getId());
         assertEquals("Birkbeck Socials", groupDTO.getName());
         assertEquals(6, groupDTO.getPassCode().length());
         assertEquals(0, groupDTO.getUsers().size());
     }
 
+    @Test
+    void updateGroup() {
+        groupService.updateGroup(1L, "Bill Appreciation Society");
+        GroupDTO groupDTO = groupService.getGroup(1L);
+        assertEquals("Bill Appreciation Society", groupDTO.getName());
+    }
 
     @Test
-    void updateGroup() {}
-
-    @Test
-    void deleteGroup() {}
+    void deleteGroup() {
+        groupService.deleteGroup(1L);
+    }
 }
