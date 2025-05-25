@@ -1,4 +1,4 @@
-package io.samsquamptch.afterclass;
+package io.samsquamptch.afterclass.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.samsquamptch.afterclass.controllers.UserController;
@@ -25,7 +25,7 @@ import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserController.class)
-public class UserApiTests {
+public class UserControllerTests {
     @Autowired
     private MockMvc mvc;
 

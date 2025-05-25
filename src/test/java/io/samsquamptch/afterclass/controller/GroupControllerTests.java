@@ -1,4 +1,4 @@
-package io.samsquamptch.afterclass;
+package io.samsquamptch.afterclass.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.samsquamptch.afterclass.controllers.GroupController;
@@ -24,7 +24,7 @@ import org.springframework.http.MediaType;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(GroupController.class)
-public class GroupApiTests {
+public class GroupControllerTests {
 
     @Autowired
     private MockMvc mvc;
@@ -64,7 +64,7 @@ public class GroupApiTests {
     void testGetGroup() throws Exception {
         when(service.getGroup(1L)).thenReturn(testDTO);
 
-        mvc.perform(get("/api/groups/zXXtpQ"))
+        mvc.perform(get("/api/groups/1"))
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         jsonPath("$.id").value(1L),
@@ -78,7 +78,7 @@ public class GroupApiTests {
 
         doNothing().when(service).updateGroup(1L, "Test Group");
 
-        mvc.perform(put("/api/groups/zXXtpQ")
+        mvc.perform(put("/api/groups/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNoContent());
@@ -88,6 +88,6 @@ public class GroupApiTests {
     void testDeleteGroup() throws Exception {
         doNothing().when(service).deleteGroup(1L);
 
-        mvc.perform(delete("/api/groups/zXXtpQ")).andExpect(status().isNoContent());
+        mvc.perform(delete("/api/groups/1")).andExpect(status().isNoContent());
     }
 }

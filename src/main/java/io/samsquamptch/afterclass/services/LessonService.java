@@ -5,7 +5,6 @@ import io.samsquamptch.afterclass.User;
 import io.samsquamptch.afterclass.dto.LessonDTO;
 import io.samsquamptch.afterclass.dto.LessonRequestDTO;
 import io.samsquamptch.afterclass.exception.NotFoundException;
-import io.samsquamptch.afterclass.repositories.GroupRepository;
 import io.samsquamptch.afterclass.repositories.LessonRepository;
 import io.samsquamptch.afterclass.repositories.UserRepository;
 
@@ -18,10 +17,9 @@ import java.util.stream.Collectors;
 public class LessonService {
 
     private final LessonRepository lessonRepository;
-    // Replace these with services once they've been set up
     private final UserRepository userRepository;
 
-    public LessonService(LessonRepository lessonRepository, UserRepository userRepository, GroupRepository groupRepository) {
+    public LessonService(LessonRepository lessonRepository, UserRepository userRepository) {
         this.lessonRepository = lessonRepository;
         this.userRepository = userRepository;
     }
