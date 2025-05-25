@@ -25,7 +25,8 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getUsers(@PathVariable Long groupId) {
-        return null;
+        List<UserDTO> userDTOs = userService.getAllUsers(groupId);
+        return new ResponseEntity<>(userDTOs, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -34,19 +35,17 @@ public class UserController {
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long groupId,
-                                              @PathVariable Long id,
-                                              @RequestBody UserRequestDTO request) {
-        return null;
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable Long groupId,
                                            @PathVariable Long id,
                                            @RequestBody UserRequestDTO request) {
-        return null;
+        userService.updateUser(groupId, id, request.getName());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long groupId, @PathVariable Long id) {
+        userService.deleteUser(groupId, id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

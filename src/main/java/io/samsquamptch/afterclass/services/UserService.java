@@ -2,6 +2,7 @@ package io.samsquamptch.afterclass.services;
 
 import io.samsquamptch.afterclass.Group;
 import io.samsquamptch.afterclass.User;
+import io.samsquamptch.afterclass.dto.LessonDTO;
 import io.samsquamptch.afterclass.dto.UserDTO;
 import io.samsquamptch.afterclass.exception.NotFoundException;
 import io.samsquamptch.afterclass.repositories.GroupRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -32,14 +34,19 @@ public class UserService {
     }
 
     public List<UserDTO> getAllUsers(Long groupId) {
-        return null;
+        List<User> users = userRepository.findByGroupId(groupId);
+        return users.stream().map(u -> new UserDTO(
+                        u.getId(),
+                        u.getName(),
+                        getUserLessonDTOs(u)))
+                .collect(Collectors.toList());
     }
 
     public UserDTO getUser(Long groupId, Long id) {
         validateUserAndGroup(groupId, id);
-
         User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
-        return new UserDTO(user.getId(), user.getName(), new ArrayList<>());
+
+        return new UserDTO(user.getId(), user.getName(), getUserLessonDTOs(user));
     }
 
     public void updateUser(Long groupId, Long id, String name) {
@@ -55,5 +62,15 @@ public class UserService {
         if (!isValid) {
             throw new IllegalArgumentException("User does not belong to group");
         }
+    }
+
+    private List<LessonDTO> getUserLessonDTOs(User user) {
+        return user.getLessons().stream()
+                .map(lesson -> new LessonDTO(lesson.getId(),
+                        lesson.getName(),
+                        lesson.getWeekDay(),
+                        lesson.getStartTime(),
+                        lesson.getEndTime()))
+                .collect(Collectors.toList());
     }
 }
