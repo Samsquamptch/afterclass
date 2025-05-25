@@ -50,7 +50,10 @@ public class UserService {
     }
 
     public void updateUser(Long groupId, Long id, String name) {
-
+        validateUserAndGroup(groupId, id);
+        User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
+        user.setName(name);
+        userRepository.save(user);
     }
 
     public void deleteUser(Long groupId, Long id) {
