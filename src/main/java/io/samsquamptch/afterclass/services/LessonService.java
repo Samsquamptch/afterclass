@@ -5,7 +5,6 @@ import io.samsquamptch.afterclass.User;
 import io.samsquamptch.afterclass.dto.LessonDTO;
 import io.samsquamptch.afterclass.dto.LessonRequestDTO;
 import io.samsquamptch.afterclass.exception.NotFoundException;
-import io.samsquamptch.afterclass.repositories.GroupRepository;
 import io.samsquamptch.afterclass.repositories.LessonRepository;
 import io.samsquamptch.afterclass.repositories.UserRepository;
 
