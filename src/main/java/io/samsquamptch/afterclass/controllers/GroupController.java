@@ -32,7 +32,8 @@ public class GroupController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateGroup(@PathVariable Long id, @RequestBody GroupRequestDTO request) {
-        return null;
+        groupService.updateGroup(id, request.getName());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{id}")

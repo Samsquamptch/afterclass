@@ -35,7 +35,9 @@ public class GroupService {
     }
 
     public void updateGroup(Long id, String name) {
-        return;
+        Group group = groupRepository.findById(id).orElseThrow(NotFoundException::new);
+        group.setName(name);
+        groupRepository.save(group);
     }
 
     public void deleteGroup(Long id) {
