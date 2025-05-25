@@ -57,7 +57,8 @@ public class UserService {
     }
 
     public void deleteUser(Long groupId, Long id) {
-
+        validateUserAndGroup(groupId, id);
+        userRepository.deleteById(id);
     }
 
     private void validateUserAndGroup(Long groupId, Long userId) {

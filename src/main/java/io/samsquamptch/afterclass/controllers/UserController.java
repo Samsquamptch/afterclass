@@ -35,7 +35,7 @@ public class UserController {
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable Long groupId,
                                            @PathVariable Long id,
                                            @RequestBody UserRequestDTO request) {
@@ -43,7 +43,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long groupId, @PathVariable Long id) {
         userService.deleteUser(groupId, id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
