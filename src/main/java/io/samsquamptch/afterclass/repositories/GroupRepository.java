@@ -8,8 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface GroupRepository extends JpaRepository <Group, Long> {
-
-    Optional<Group> findByPassCode(String passCode);
-
-    Optional<Group> findGroupById(long id);
 }

@@ -18,10 +18,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
+    private final LessonService lessonService;
 
-    public UserService(UserRepository userRepository, GroupRepository groupRepository) {
+    public UserService(UserRepository userRepository, GroupRepository groupRepository, LessonService lessonService) {
         this.userRepository = userRepository;
         this.groupRepository = groupRepository;
+        this.lessonService = lessonService;
     }
 
     public UserDTO createUser(Long groupId, String name) {
@@ -38,7 +40,7 @@ public class UserService {
         return users.stream().map(u -> new UserDTO(
                         u.getId(),
                         u.getName(),
-                        getUserLessonDTOs(u)))
+                        getLessonsFromUser(groupId, u.getId())))
                 .collect(Collectors.toList());
     }
 
@@ -46,7 +48,7 @@ public class UserService {
         validateUserAndGroup(groupId, id);
         User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
 
-        return new UserDTO(user.getId(), user.getName(), getUserLessonDTOs(user));
+        return new UserDTO(user.getId(), user.getName(), getLessonsFromUser(groupId, id));
     }
 
     public void updateUser(Long groupId, Long id, String name) {
@@ -68,13 +70,7 @@ public class UserService {
         }
     }
 
-    private List<LessonDTO> getUserLessonDTOs(User user) {
-        return user.getLessons().stream()
-                .map(lesson -> new LessonDTO(lesson.getId(),
-                        lesson.getName(),
-                        lesson.getWeekDay(),
-                        lesson.getStartTime(),
-                        lesson.getEndTime()))
-                .collect(Collectors.toList());
+    private List<LessonDTO> getLessonsFromUser(Long groupId, Long userId) {
+        return lessonService.getAllLessons(groupId, userId);
     }
 }
