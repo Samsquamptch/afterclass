@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @SpringBootTest
 @Transactional
@@ -36,9 +37,12 @@ public abstract class AbstractIntegrationTests {
     void setUp() {
         Group group = new Group("Test Group", "zQxprL");
         Group savedGroup = groupRepository.saveAndFlush(group);
-        User user = new User("Chris");
-        user.setGroup(savedGroup);
-        User savedUser = userRepository.saveAndFlush(user);
+        User user1 = new User("Chris");
+        User user2 = new User("Seb");
+        user1.setGroup(savedGroup);
+        user2.setGroup(savedGroup);
+        User savedUser1 = userRepository.saveAndFlush(user1);
+        User savedUser2 = userRepository.saveAndFlush(user2);
         Lesson lesson1 = new Lesson("Business Law",
                 WeekDay.FRIDAY,
                 LocalTime.of(18,0),
@@ -47,10 +51,14 @@ public abstract class AbstractIntegrationTests {
                 WeekDay.WEDNESDAY,
                 LocalTime.of(18,0),
                 LocalTime.of(19,30));
-        lesson1.setUser(savedUser);
-        lesson2.setUser(savedUser);
-        lessonRepository.saveAndFlush(lesson1);
-        lessonRepository.saveAndFlush(lesson2);
+        Lesson lesson3 = new Lesson("Computer Networking",
+                WeekDay.WEDNESDAY,
+                LocalTime.of(18,0),
+                LocalTime.of(21,0));
+        savedUser1.addLesson(lesson1);
+        savedUser1.addLesson(lesson2);
+        savedUser2.addLesson(lesson3);
+        lessonRepository.saveAllAndFlush(List.of(lesson1, lesson2, lesson3));
     }
 
     @AfterEach

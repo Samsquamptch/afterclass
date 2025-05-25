@@ -24,7 +24,7 @@ public class Group {
     @Setter
     private String passCode;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private final List<User> users = new ArrayList<>();
 
     public Group(String name, String passCode) {

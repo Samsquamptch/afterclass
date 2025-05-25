@@ -7,6 +7,7 @@ import io.samsquamptch.afterclass.dto.UserDTO;
 import io.samsquamptch.afterclass.exception.NotFoundException;
 import io.samsquamptch.afterclass.repositories.GroupRepository;
 import io.samsquamptch.afterclass.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -58,9 +59,11 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     public void deleteUser(Long groupId, Long id) {
         validateUserAndGroup(groupId, id);
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id).orElseThrow();
+        userRepository.delete(user);
     }
 
     private void validateUserAndGroup(Long groupId, Long userId) {
