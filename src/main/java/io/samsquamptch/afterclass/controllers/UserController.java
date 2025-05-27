@@ -26,6 +26,7 @@ public class UserController implements SessionValidator, GroupValidator {
         Long groupId = (Long) session.getAttribute("groupId");
         validateGroup(groupId);
         CreatedUserDTO createdUser = userService.createUser(groupId, request.getName());
+        session.setAttribute("userId", createdUser.getId());
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
