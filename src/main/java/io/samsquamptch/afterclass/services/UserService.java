@@ -45,13 +45,6 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserDTO getUser(Long groupId, Long id) {
-        validateUserAndGroup(groupId, id);
-        User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
-
-        return new UserDTO(user.getId(), user.getName(), getLessonsFromUser(groupId, id));
-    }
-
     public void updateUser(Long groupId, Long id, String name) {
         validateUserAndGroup(groupId, id);
         User user = userRepository.findById(id).orElseThrow(NotFoundException::new);

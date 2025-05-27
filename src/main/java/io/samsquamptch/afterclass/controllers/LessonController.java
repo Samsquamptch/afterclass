@@ -2,20 +2,18 @@ package io.samsquamptch.afterclass.controllers;
 
 import io.samsquamptch.afterclass.dto.LessonDTO;
 import io.samsquamptch.afterclass.dto.LessonRequestDTO;
-import io.samsquamptch.afterclass.exception.UnauthorisedException;
+import io.samsquamptch.afterclass.interfaces.SessionValidator;
 import io.samsquamptch.afterclass.services.LessonService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/lessons")
-public class LessonController {
+public class LessonController implements SessionValidator {
 
     LessonService lessonService;
 
@@ -66,11 +64,5 @@ public class LessonController {
         validateSession(groupId, userId);
         lessonService.deleteLesson(groupId, userId, id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    private void validateSession(Long groupId, Long userId) {
-        if (groupId == null || userId == null) {
-            throw new UnauthorisedException("Invalid session");
-        }
     }
 }

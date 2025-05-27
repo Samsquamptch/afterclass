@@ -44,7 +44,7 @@ public class UserControllerTests {
 
         when(service.createUser(1L,"Cian")).thenReturn(testDTO);
 
-        mvc.perform(post("/api/groups/1/users")
+        mvc.perform(post("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpectAll(status().isCreated(),
@@ -63,7 +63,7 @@ public class UserControllerTests {
 
         when(service.getAllUsers(1L)).thenReturn(testDTOs);
 
-        mvc.perform(get("/api/groups/1/users"))
+        mvc.perform(get("/api/users"))
                 .andExpectAll(status().isOk(),
                         jsonPath("$.size()").value(3),
                         jsonPath("$[0].id").value(1),
@@ -75,26 +75,13 @@ public class UserControllerTests {
     }
 
     @Test
-    void testGetUser() throws Exception {
-        UserDTO testDTO = new UserDTO(1L, "Cian", null);
-
-        when(service.getUser(1L, 1L)).thenReturn(testDTO);
-
-        mvc.perform(get("/api/groups/1/users/1"))
-                .andExpectAll(status().isOk(),
-                        content().contentType(MediaType.APPLICATION_JSON),
-                        jsonPath("$.id").value(1L),
-                        jsonPath("$.name").value("Cian"));
-    }
-
-    @Test
     void testUpdateUser() throws Exception {
         UserRequestDTO request = new UserRequestDTO("Seb");
         String json = objectMapper.writeValueAsString(request);
 
         doNothing().when(service).updateUser(1L, 1L, "Seb");
 
-        mvc.perform(put("/api/groups/1/users/1")
+        mvc.perform(put("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNoContent());
@@ -104,6 +91,6 @@ public class UserControllerTests {
     void testDeleteUser() throws Exception {
         doNothing().when(service).deleteUser(1L, 1L);
 
-        mvc.perform(delete("/api/groups/1/users/1")).andExpect(status().isNoContent());
+        mvc.perform(delete("/api/users")).andExpect(status().isNoContent());
     }
 }

@@ -29,12 +29,6 @@ public class UserController {
         return new ResponseEntity<>(userDTOs, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable Long groupId, @PathVariable Long id) {
-        UserDTO userDTO = userService.getUser(groupId, id);
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable Long groupId,
                                            @PathVariable Long id,
