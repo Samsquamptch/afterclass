@@ -45,6 +45,7 @@ public class UserControllerTests {
         when(service.createUser(1L,"Cian")).thenReturn(testDTO);
 
         mvc.perform(post("/api/users")
+                        .sessionAttr("groupId", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpectAll(status().isCreated(),
@@ -63,7 +64,8 @@ public class UserControllerTests {
 
         when(service.getAllUsers(1L)).thenReturn(testDTOs);
 
-        mvc.perform(get("/api/users"))
+        mvc.perform(get("/api/users")
+                        .sessionAttr("groupId", 1L))
                 .andExpectAll(status().isOk(),
                         jsonPath("$.size()").value(3),
                         jsonPath("$[0].id").value(1),
@@ -82,6 +84,8 @@ public class UserControllerTests {
         doNothing().when(service).updateUser(1L, 1L, "Seb");
 
         mvc.perform(put("/api/users")
+                        .sessionAttr("groupId", 1L)
+                        .sessionAttr("userId", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNoContent());
@@ -91,6 +95,18 @@ public class UserControllerTests {
     void testDeleteUser() throws Exception {
         doNothing().when(service).deleteUser(1L, 1L);
 
-        mvc.perform(delete("/api/users")).andExpect(status().isNoContent());
+        mvc.perform(delete("/api/users")
+                        .sessionAttr("groupId", 1L)
+                        .sessionAttr("userId", 1L))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void testUnauthorised() throws Exception {
+        doNothing().when(service).deleteUser(1L, 1L);
+
+        mvc.perform(delete("/api/users")
+                        .sessionAttr("groupId", 1L))
+                .andExpect(status().isUnauthorized());
     }
 }

@@ -28,7 +28,7 @@ public class LessonController implements SessionValidator {
         return new ResponseEntity<>(lessonDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<LessonDTO>> getLessons(HttpSession session) {
         Long groupId = (Long) session.getAttribute("groupId");
         Long userId = (Long) session.getAttribute("userId");
