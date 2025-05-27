@@ -39,6 +39,7 @@ public class LessonControllerTests {
 
     private LessonRequestDTO request;
     private LessonDTO testDTO;
+    private List<LessonDTO> testDTOs;
 
     @BeforeEach
     public void setup() {
@@ -51,16 +52,25 @@ public class LessonControllerTests {
                 WeekDay.TUESDAY,
                 LocalTime.of(18, 0),
                 LocalTime.of(21, 0));
+        LessonDTO testDTO2 = new LessonDTO(2L,
+                "Computer Networking",
+                WeekDay.WEDNESDAY,
+                LocalTime.of(18, 0),
+                LocalTime.of(19, 30));
+        testDTOs = List.of(testDTO, testDTO2);
     }
 
     @Test
     void testCreateLesson() throws Exception {
         String json = objectMapper.writeValueAsString(request);
 
+
         when(service.createLesson(1L, 1L, request)).thenReturn(testDTO);
-        mvc.perform(post("/api/groups/1/users/1/lessons")
+        mvc.perform(post("/api/lessons")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json))
+                        .content(json)
+                        .sessionAttr("userId", 1L)
+                        .sessionAttr("groupId", 1L))
                 .andExpectAll(status().isCreated(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         jsonPath("$.id").value(1L),
@@ -72,16 +82,11 @@ public class LessonControllerTests {
 
     @Test
     void testGetAllLessons() throws Exception {
-        LessonDTO testDTO2 = new LessonDTO(2L,
-                "Computer Networking",
-                WeekDay.WEDNESDAY,
-                LocalTime.of(18, 0),
-                LocalTime.of(19, 30));
-        List<LessonDTO> testDTOs = List.of(testDTO, testDTO2);
-
         when(service.getAllLessons(1L, 1L)).thenReturn(testDTOs);
 
-        mvc.perform(get("/api/groups/1/users/1/lessons"))
+        mvc.perform(get("/api/lessons")
+                        .sessionAttr("userId", 1L)
+                        .sessionAttr("groupId", 1L))
                 .andExpectAll(status().isOk(),
                         jsonPath("$.size()").value(2),
                         jsonPath("$[0].id").value(1),
@@ -100,7 +105,9 @@ public class LessonControllerTests {
     void testGetLesson() throws Exception {
         when(service.getLesson(1L, 1L, 1L)).thenReturn(testDTO);
 
-        mvc.perform(get("/api/groups/1/users/1/lessons/1"))
+        mvc.perform(get("/api/lessons/1")
+                        .sessionAttr("userId", 1L)
+                        .sessionAttr("groupId", 1L))
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         jsonPath("$.id").value(1L),
@@ -116,9 +123,11 @@ public class LessonControllerTests {
 
         doNothing().when(service).updateLesson(1L, 1L, 1L, request);
 
-        mvc.perform(put("/api/groups/1/users/1/lessons/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+        mvc.perform(put("/api/lessons/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .sessionAttr("userId", 1L)
+                        .sessionAttr("groupId", 1L))
                 .andExpect(status().isNoContent());
     }
 
@@ -126,6 +135,18 @@ public class LessonControllerTests {
     void testDeleteLesson() throws Exception {
         doNothing().when(service).deleteLesson(1L, 1L, 1L);
 
-        mvc.perform(delete("/api/groups/1/users/1/lessons/1")).andExpect(status().isNoContent());
+        mvc.perform(delete("/api/lessons/1")
+                        .sessionAttr("userId", 1L)
+                        .sessionAttr("groupId", 1L))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void testUnathorisedRequest() throws Exception {
+        when(service.getLesson(1L, 1L, 1L)).thenReturn(testDTO);
+
+        mvc.perform(get("/api/lessons/1")
+                        .sessionAttr("userId", 1L))
+                .andExpectAll(status().isUnauthorized());
     }
 }

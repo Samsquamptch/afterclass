@@ -37,8 +37,8 @@ public abstract class AbstractIntegrationTests {
     void setUp() {
         Group group = new Group("Test Group", "zQxprL");
         Group savedGroup = groupRepository.saveAndFlush(group);
-        User user1 = new User("Chris");
-        User user2 = new User("Seb");
+        User user1 = new User("Chris", "GrZAqm");
+        User user2 = new User("Seb", "jTRcmD");
         user1.setGroup(savedGroup);
         user2.setGroup(savedGroup);
         User savedUser1 = userRepository.saveAndFlush(user1);

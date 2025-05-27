@@ -25,7 +25,7 @@ public class LessonServiceTests extends AbstractIntegrationTests {
     private LessonService lessonService;
 
     @Test
-    public void GetLesson() {
+    public void getLesson() {
         LessonDTO lessonDTO = lessonService.getLesson(1L, 1L, 1L);
         assertEquals("Business Law", lessonDTO.getName());
         assertEquals(WeekDay.FRIDAY, lessonDTO.getWeekDay());
@@ -34,7 +34,7 @@ public class LessonServiceTests extends AbstractIntegrationTests {
     }
 
     @Test
-    public void GetAllLessons() {
+    public void getAllLessons() {
         List<LessonDTO> lessonDTOs = lessonService.getAllLessons(1L, 1L);
         assertEquals(2, lessonDTOs.size());
         assertEquals("Business Law", lessonDTOs.getFirst().getName());
@@ -48,7 +48,7 @@ public class LessonServiceTests extends AbstractIntegrationTests {
     }
 
     @Test
-    public void AddLesson() {
+    public void addLesson() {
         LessonRequestDTO lessonRequestDTO = new LessonRequestDTO("Marketing",
                 WeekDay.TUESDAY,
                 LocalTime.of(19,30),
@@ -62,7 +62,7 @@ public class LessonServiceTests extends AbstractIntegrationTests {
     }
 
     @Test
-    public void UpdateLesson() {
+    public void updateLesson() {
         LessonRequestDTO lessonRequestDTO = new LessonRequestDTO("Business Law",
                 WeekDay.MONDAY,
                 LocalTime.of(19,30),
@@ -74,7 +74,7 @@ public class LessonServiceTests extends AbstractIntegrationTests {
     }
 
     @Test
-    public void DeleteLesson() {
+    public void deleteLesson() {
         assertTrue(lessonRepository.existsById(1L));
         lessonService.deleteLesson(1L, 1L, 1L);
         assertFalse(lessonRepository.existsById(1L));

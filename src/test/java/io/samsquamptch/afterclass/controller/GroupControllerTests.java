@@ -64,7 +64,8 @@ public class GroupControllerTests {
     void testGetGroup() throws Exception {
         when(service.getGroup(1L)).thenReturn(testDTO);
 
-        mvc.perform(get("/api/groups/1"))
+        mvc.perform(get("/api/groups")
+                        .sessionAttr("groupId", 1L))
                 .andExpectAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         jsonPath("$.id").value(1L),
@@ -78,7 +79,8 @@ public class GroupControllerTests {
 
         doNothing().when(service).updateGroup(1L, "Test Group");
 
-        mvc.perform(put("/api/groups/1")
+        mvc.perform(put("/api/groups")
+                        .sessionAttr("groupId", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNoContent());
@@ -88,6 +90,8 @@ public class GroupControllerTests {
     void testDeleteGroup() throws Exception {
         doNothing().when(service).deleteGroup(1L);
 
-        mvc.perform(delete("/api/groups/1")).andExpect(status().isNoContent());
+        mvc.perform(delete("/api/groups")
+                        .sessionAttr("groupId", 1L))
+                .andExpect(status().isNoContent());
     }
 }

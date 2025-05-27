@@ -2,6 +2,7 @@ package io.samsquamptch.afterclass.services;
 
 import io.samsquamptch.afterclass.Group;
 import io.samsquamptch.afterclass.User;
+import io.samsquamptch.afterclass.dto.CreatedUserDTO;
 import io.samsquamptch.afterclass.dto.LessonDTO;
 import io.samsquamptch.afterclass.dto.UserDTO;
 import io.samsquamptch.afterclass.exception.NotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,13 +29,16 @@ public class UserService {
         this.lessonService = lessonService;
     }
 
-    public UserDTO createUser(Long groupId, String name) {
+    public CreatedUserDTO createUser(Long groupId, String name) {
         Group group = groupRepository.findById(groupId).orElseThrow(NotFoundException::new);
-
-        User user = new User(name);
+        String passCode;
+        do {
+            passCode = UUID.randomUUID().toString().substring(0, 8);
+        } while (userRepository.existsByPassCode(passCode));
+        User user = new User(name, passCode);
         user.setGroup(group);
         User savedUser = userRepository.save(user);
-        return new UserDTO(savedUser.getId(), savedUser.getName(), new ArrayList<>());
+        return new CreatedUserDTO(savedUser.getId(), savedUser.getName(), savedUser.getPassCode(), new ArrayList<>());
     }
 
     public List<UserDTO> getAllUsers(Long groupId) {
@@ -43,13 +48,6 @@ public class UserService {
                         u.getName(),
                         getLessonsFromUser(groupId, u.getId())))
                 .collect(Collectors.toList());
-    }
-
-    public UserDTO getUser(Long groupId, Long id) {
-        validateUserAndGroup(groupId, id);
-        User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
-
-        return new UserDTO(user.getId(), user.getName(), getLessonsFromUser(groupId, id));
     }
 
     public void updateUser(Long groupId, Long id, String name) {

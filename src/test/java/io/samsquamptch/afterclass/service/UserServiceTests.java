@@ -1,6 +1,9 @@
 package io.samsquamptch.afterclass.service;
 
+import io.samsquamptch.afterclass.User;
+import io.samsquamptch.afterclass.dto.CreatedUserDTO;
 import io.samsquamptch.afterclass.dto.UserDTO;
+import io.samsquamptch.afterclass.exception.NotFoundException;
 import io.samsquamptch.afterclass.services.UserService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -19,14 +22,6 @@ public class UserServiceTests extends AbstractIntegrationTests {
     private UserService userService;
 
     @Test
-    public void getUser() {
-        UserDTO userDTO = userService.getUser(1L, 1L);
-        assertEquals("Chris", userDTO.getName());
-        assertEquals(1L, userDTO.getId());
-        assertEquals(2, userDTO.getLessons().size());
-    }
-
-    @Test
     public void getAllUsers() {
         List<UserDTO> userDTOs = userService.getAllUsers(1L);
         assertEquals(2, userDTOs.size());
@@ -38,16 +33,17 @@ public class UserServiceTests extends AbstractIntegrationTests {
 
     @Test
     public void addUser() {
-        UserDTO userDTO = userService.createUser(1L, "Cian");
+        CreatedUserDTO userDTO = userService.createUser(1L, "Cian");
         assertEquals("Cian", userDTO.getName());
+        assertEquals(8, userDTO.getPassCode().length());
         assertTrue(userRepository.existsById(userDTO.getId()));
     }
 
     @Test
     public void updateUser() {
         userService.updateUser(1L, 1L, "Christopher");
-        UserDTO userDTO = userService.getUser(1L, 1L);
-        assertEquals("Christopher", userDTO.getName());
+        User user = userRepository.findById(1L).orElseThrow(NotFoundException::new);
+        assertEquals("Christopher", user.getName());
     }
 
     @Test
