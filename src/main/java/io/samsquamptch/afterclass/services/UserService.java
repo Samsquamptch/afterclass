@@ -31,8 +31,11 @@ public class UserService {
 
     public CreatedUserDTO createUser(Long groupId, String name) {
         Group group = groupRepository.findById(groupId).orElseThrow(NotFoundException::new);
-
-        User user = new User(name, UUID.randomUUID().toString().substring(0, 6));
+        String passCode;
+        do {
+            passCode = UUID.randomUUID().toString().substring(0, 8);
+        } while (userRepository.existsByPassCode(passCode));
+        User user = new User(name, passCode);
         user.setGroup(group);
         User savedUser = userRepository.save(user);
         return new CreatedUserDTO(savedUser.getId(), savedUser.getName(), savedUser.getPassCode(), new ArrayList<>());

@@ -30,7 +30,7 @@ public class GroupServiceTests extends AbstractIntegrationTests {
         System.out.println(groupDTO.getPassCode());
         assertEquals(2L, groupDTO.getId());
         assertEquals("Birkbeck Socials", groupDTO.getName());
-        assertEquals(6, groupDTO.getPassCode().length());
+        assertEquals(8, groupDTO.getPassCode().length());
         assertEquals(0, groupDTO.getUsers().size());
     }
 

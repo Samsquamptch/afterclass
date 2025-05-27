@@ -24,7 +24,11 @@ public class GroupService {
     }
 
     public GroupDTO createGroup(String name) {
-        Group group = new Group(name, UUID.randomUUID().toString().substring(0, 6));
+        String passCode;
+        do {
+            passCode = UUID.randomUUID().toString().substring(0, 8);
+        } while (groupRepository.existsByPassCode(passCode));
+        Group group = new Group(name, passCode);
         Group savedGroup = groupRepository.save(group);
         return new GroupDTO(savedGroup.getId(), savedGroup.getName(), savedGroup.getPassCode(), new ArrayList<>());
     }

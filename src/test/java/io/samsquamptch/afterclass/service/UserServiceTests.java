@@ -35,7 +35,7 @@ public class UserServiceTests extends AbstractIntegrationTests {
     public void addUser() {
         CreatedUserDTO userDTO = userService.createUser(1L, "Cian");
         assertEquals("Cian", userDTO.getName());
-        assertEquals(6, userDTO.getPassCode().length());
+        assertEquals(8, userDTO.getPassCode().length());
         assertTrue(userRepository.existsById(userDTO.getId()));
     }
 
