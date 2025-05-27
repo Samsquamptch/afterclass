@@ -19,7 +19,7 @@ public class ObjectsTest {
 
     @Test
     public void createUser() {
-        User user = new User("Cian");
+        User user = new User("Cian", "zQwllP");
 
         assertEquals("Cian", user.getName());
     }
@@ -39,15 +39,15 @@ public class ObjectsTest {
     @Test
     public void createGroupUser() {
         Group group = new Group("Birkbeck Socials", "zXctPQlk");
-        User user = new User("Cian");
+        User user = new User("Cian", "");
         group.addUser(user);
 
 
         assertEquals("Cian", group.getUsers().getFirst().getName());
         assertEquals(1, group.getUsers().size());
 
-        User user2 = new User("Bill");
-        User user3 = new User("Tanjil");
+        User user2 = new User("Bill","zXct");
+        User user3 = new User("Tanjil", "PQlk");
         group.addUser(user2);
         group.addUser(user3);
 
@@ -57,7 +57,7 @@ public class ObjectsTest {
 
     @Test
     public void createUserLesson() {
-        User user = new User("Tanjil");
+        User user = new User("Tanjil", "");
         Lesson lesson = new Lesson("Data Analytics", WeekDay.TUESDAY, LocalTime.of(18, 0), LocalTime.of(19, 30));
         user.addLesson(lesson);
 
@@ -77,7 +77,7 @@ public class ObjectsTest {
     @Test
     public void createGroupUserLesson() {
         Group group = new Group("Birkbeck Socials", "zXctPQlk");
-        User user = new User("Ethan");
+        User user = new User("Ethan", "");
         Lesson lesson = new Lesson("Data Analytics", WeekDay.TUESDAY, LocalTime.of(18, 0), LocalTime.of(19, 30));
 
         user.addLesson(lesson);

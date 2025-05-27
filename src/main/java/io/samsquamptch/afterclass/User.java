@@ -21,6 +21,9 @@ public class User {
     @Setter
     private String name;
 
+    @Setter
+    private String passCode;
+
     @ManyToOne
     @JoinColumn(name = "group_id")
     @Setter
@@ -29,8 +32,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private final List<Lesson> lessons = new ArrayList<>();
 
-    public User(String name) {
+    public User(String name, String passCode) {
         this.name = name;
+        this.passCode = passCode;
     }
 
     public void addLesson(Lesson lesson) {

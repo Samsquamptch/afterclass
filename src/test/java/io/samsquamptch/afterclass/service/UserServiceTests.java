@@ -1,6 +1,7 @@
 package io.samsquamptch.afterclass.service;
 
 import io.samsquamptch.afterclass.User;
+import io.samsquamptch.afterclass.dto.CreatedUserDTO;
 import io.samsquamptch.afterclass.dto.UserDTO;
 import io.samsquamptch.afterclass.exception.NotFoundException;
 import io.samsquamptch.afterclass.services.UserService;
@@ -32,8 +33,9 @@ public class UserServiceTests extends AbstractIntegrationTests {
 
     @Test
     public void addUser() {
-        UserDTO userDTO = userService.createUser(1L, "Cian");
+        CreatedUserDTO userDTO = userService.createUser(1L, "Cian");
         assertEquals("Cian", userDTO.getName());
+        assertEquals(6, userDTO.getPassCode().length());
         assertTrue(userRepository.existsById(userDTO.getId()));
     }
 

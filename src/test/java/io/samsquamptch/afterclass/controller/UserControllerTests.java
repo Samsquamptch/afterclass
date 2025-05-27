@@ -2,6 +2,7 @@ package io.samsquamptch.afterclass.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.samsquamptch.afterclass.controllers.UserController;
+import io.samsquamptch.afterclass.dto.CreatedUserDTO;
 import io.samsquamptch.afterclass.dto.UserRequestDTO;
 import io.samsquamptch.afterclass.dto.UserDTO;
 import io.samsquamptch.afterclass.services.UserService;
@@ -40,7 +41,7 @@ public class UserControllerTests {
         UserRequestDTO request = new UserRequestDTO("Cian");
         String json = objectMapper.writeValueAsString(request);
 
-        UserDTO testDTO = new UserDTO(1L, "Cian", new ArrayList<>());
+        CreatedUserDTO testDTO = new CreatedUserDTO(1L, "Cian", "xPLFar", new ArrayList<>());
 
         when(service.createUser(1L,"Cian")).thenReturn(testDTO);
 
@@ -52,7 +53,8 @@ public class UserControllerTests {
                         content().contentType(MediaType.APPLICATION_JSON),
                         jsonPath("$.id").value(1L),
                         jsonPath("$.name").value("Cian"),
-                        jsonPath("$.lessons.size()").value(0));
+                        jsonPath("$.lessons.size()").value(0),
+                        jsonPath("$.passCode").value("xPLFar"));
     }
 
     @Test

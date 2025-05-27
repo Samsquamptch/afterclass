@@ -1,5 +1,6 @@
 package io.samsquamptch.afterclass.controllers;
 
+import io.samsquamptch.afterclass.dto.CreatedUserDTO;
 import io.samsquamptch.afterclass.dto.UserDTO;
 import io.samsquamptch.afterclass.dto.UserRequestDTO;
 import io.samsquamptch.afterclass.interfaces.GroupValidator;
@@ -21,10 +22,10 @@ public class UserController implements SessionValidator, GroupValidator {
     public UserController(UserService userService) {this.userService = userService;}
 
     @PostMapping()
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserRequestDTO request, HttpSession session) {
+    public ResponseEntity<CreatedUserDTO> createUser(@RequestBody UserRequestDTO request, HttpSession session) {
         Long groupId = (Long) session.getAttribute("groupId");
         validateGroup(groupId);
-        UserDTO createdUser = userService.createUser(groupId, request.getName());
+        CreatedUserDTO createdUser = userService.createUser(groupId, request.getName());
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
