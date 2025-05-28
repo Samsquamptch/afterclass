@@ -3,7 +3,6 @@ package io.samsquamptch.afterclass.service;
 import io.samsquamptch.afterclass.exception.UnauthorisedException;
 import io.samsquamptch.afterclass.services.AuthService;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +25,7 @@ public class AuthServiceTests extends AbstractIntegrationTests {
 
     @Test
     public void userAuth() throws Exception {
-        Long userId = authService.authenticateUser("jTRcmD");
+        Long userId = authService.authenticateUser("jTRcmD", 1L);
         assertEquals(2L, userId);
     }
 

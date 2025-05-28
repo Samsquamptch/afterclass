@@ -66,7 +66,7 @@ public class AuthControllerTests {
 
         session.setAttribute("groupId", 1L);
 
-        when(service.authenticateUser("Passcode")).thenReturn(id);
+        when(service.authenticateUser("Passcode", 1L)).thenReturn(id);
 
         mvc.perform(get("/api/auth/user")
                         .contentType(MediaType.APPLICATION_JSON)

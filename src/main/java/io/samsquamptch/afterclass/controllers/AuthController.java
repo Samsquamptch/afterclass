@@ -1,5 +1,6 @@
 package io.samsquamptch.afterclass.controllers;
 
+import io.samsquamptch.afterclass.components.SessionValidator;
 import io.samsquamptch.afterclass.dto.AuthDTO;
 import io.samsquamptch.afterclass.services.AuthService;
 import jakarta.servlet.http.HttpSession;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final SessionValidator sessionValidator;
 
-    public AuthController(final AuthService authService) {
+    public AuthController(final AuthService authService, SessionValidator sessionValidator) {
         this.authService = authService;
+        this.sessionValidator = sessionValidator;
     }
 
     @GetMapping("/group")
@@ -28,8 +31,8 @@ public class AuthController {
 
     @GetMapping("/user")
     public ResponseEntity<Void> getUser(@RequestBody AuthDTO request, HttpSession session) {
-
-        Long userId = authService.authenticateUser(request.getPassCode());
+        Long groupId = sessionValidator.validateSessionAttribute("groupId", session);
+        Long userId = authService.authenticateUser(request.getPassCode(), groupId);
         session.setAttribute("userId", userId);
         return ResponseEntity.ok().build();
     }

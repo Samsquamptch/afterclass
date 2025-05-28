@@ -2,6 +2,7 @@ package io.samsquamptch.afterclass.services;
 
 import io.samsquamptch.afterclass.Lesson;
 import io.samsquamptch.afterclass.User;
+import io.samsquamptch.afterclass.components.EntityRelationValidator;
 import io.samsquamptch.afterclass.dto.LessonDTO;
 import io.samsquamptch.afterclass.dto.LessonRequestDTO;
 import io.samsquamptch.afterclass.exception.NotFoundException;
@@ -18,14 +19,18 @@ public class LessonService {
 
     private final LessonRepository lessonRepository;
     private final UserRepository userRepository;
+    private final EntityRelationValidator entityRelationValidator;
 
-    public LessonService(LessonRepository lessonRepository, UserRepository userRepository) {
+    public LessonService(LessonRepository lessonRepository,
+                         UserRepository userRepository,
+                         EntityRelationValidator entityRelationValidator) {
         this.lessonRepository = lessonRepository;
         this.userRepository = userRepository;
+        this.entityRelationValidator = entityRelationValidator;
     }
 
     public LessonDTO createLesson(Long groupId, Long userId, LessonRequestDTO request) {
-        validateUserAndGroup(groupId, userId);
+        entityRelationValidator.validateUserToGroup(groupId, userId);
         User user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
 
         Lesson lesson  = new Lesson(request.getName(), request.getWeekDay(), request.getStartTime(), request.getEndTime());
@@ -38,9 +43,9 @@ public class LessonService {
                 savedLesson.getEndTime());
     }
 
-    public LessonDTO getLesson(Long groupId, Long userId, long lessonId) {
-        validateUserAndGroup(groupId, userId);
-        validateLessonAndUser(lessonId, userId);
+    public LessonDTO getLesson(Long groupId, Long userId, Long lessonId) {
+        entityRelationValidator.validateUserToGroup(groupId, userId);
+        entityRelationValidator.validateLessonToUser(userId, lessonId);
 
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(NotFoundException::new);
         return new LessonDTO(lesson.getId(),
@@ -51,7 +56,7 @@ public class LessonService {
     }
 
     public List<LessonDTO> getAllLessons(Long groupId, Long userId) {
-        validateUserAndGroup(groupId, userId);
+        entityRelationValidator.validateUserToGroup(groupId, userId);
 
         List<Lesson> lessons = lessonRepository.findByUserId(userId);
         return lessons.stream()
@@ -65,8 +70,8 @@ public class LessonService {
     }
 
     public void updateLesson(Long groupId, Long userId, Long lessonId, LessonRequestDTO requestDTO) {
-        validateUserAndGroup(groupId, userId);
-        validateLessonAndUser(lessonId, userId);
+        entityRelationValidator.validateUserToGroup(groupId, userId);
+        entityRelationValidator.validateLessonToUser(userId, lessonId);
 
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(NotFoundException::new);
         lesson.setName(requestDTO.getName());
@@ -77,23 +82,9 @@ public class LessonService {
     }
 
     public void deleteLesson(Long groupId, Long userId, Long lessonId) {
-        validateUserAndGroup(groupId, userId);
-        validateLessonAndUser(lessonId, userId);
+        entityRelationValidator.validateUserToGroup(groupId, userId);
+        entityRelationValidator.validateLessonToUser(userId, lessonId);
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(NotFoundException::new);
         lessonRepository.delete(lesson);
-    }
-
-    private void validateUserAndGroup(Long groupId, Long userId) {
-        boolean isValid = userRepository.existsByIdAndGroupId(userId, groupId);
-        if (!isValid) {
-            throw new IllegalArgumentException("User does not belong to group");
-        }
-    }
-
-    private void validateLessonAndUser(Long lessonId, Long userId) {
-        boolean isValid = lessonRepository.existsByIdAndUserId(lessonId, userId);
-        if (!isValid) {
-            throw new IllegalArgumentException("Lesson does not belong to user");
-        }
     }
 }
