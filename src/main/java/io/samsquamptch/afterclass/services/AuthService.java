@@ -32,7 +32,8 @@ public class AuthService {
     public long authenticateUser(String passCode, Long groupId) {
         User user = userRepository.findByPassCode(passCode)
                 .orElseThrow(() -> new UnauthorisedException("No user with passCode found"));
-        entityRelationValidator.validateUserToGroup(groupId, user.getId());
-        return user.getId();
+        long userId = user.getId();
+        entityRelationValidator.validateUserToGroup(groupId, userId);
+        return userId;
     }
 }

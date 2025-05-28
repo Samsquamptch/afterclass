@@ -1,6 +1,7 @@
 package io.samsquamptch.afterclass.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.samsquamptch.afterclass.components.SessionValidator;
 import io.samsquamptch.afterclass.controllers.AuthController;
 import io.samsquamptch.afterclass.dto.AuthDTO;
 import io.samsquamptch.afterclass.services.AuthService;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -23,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(AuthController.class)
+@Import(SessionValidator.class)
 public class AuthControllerTests {
 
     @Autowired
@@ -81,6 +84,26 @@ public class AuthControllerTests {
     public void testNoGroupAuth() throws Exception {
         String json = objectMapper.writeValueAsString(authDTO);
 
+        mvc.perform(get("/api/auth/user")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .session(session))
+                .andExpect(status().isUnauthorized());
+    }
 
+    @Test
+    public void testUserWrongGroup() throws Exception {
+        String json = objectMapper.writeValueAsString(authDTO);
+
+        session.setAttribute("groupId", 2L);
+
+        when(service.authenticateUser("Passcode", 2L))
+                .thenThrow(new IllegalArgumentException("No group with passCode found"));
+
+        mvc.perform(get("/api/auth/user")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .session(session))
+                .andExpect(status().isBadRequest());
     }
 }
