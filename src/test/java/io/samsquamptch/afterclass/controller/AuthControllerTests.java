@@ -2,7 +2,9 @@ package io.samsquamptch.afterclass.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.samsquamptch.afterclass.controllers.AuthController;
+import io.samsquamptch.afterclass.dto.AuthDTO;
 import io.samsquamptch.afterclass.services.AuthService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -23,6 +25,13 @@ public class AuthControllerTests {
 
     @MockitoBean
     AuthService authService;
+
+    private AuthDTO authDTO;
+
+    @BeforeEach
+    void setUp() {
+        authDTO = new AuthDTO("Passcode");
+    }
 
     @Test
     public void testGroupAuth() throws Exception {}
