@@ -28,6 +28,7 @@ public class AuthController {
 
     @GetMapping("/user")
     public ResponseEntity<Void> getUser(@RequestBody AuthDTO request, HttpSession session) {
+
         Long userId = authService.authenticateUser(request.getPassCode());
         session.setAttribute("userId", userId);
         return ResponseEntity.ok().build();

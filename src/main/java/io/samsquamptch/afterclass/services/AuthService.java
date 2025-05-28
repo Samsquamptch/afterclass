@@ -27,6 +27,7 @@ public class AuthService {
     public long authenticateUser(String passCode) {
         User user = userRepository.findByPassCode(passCode)
                 .orElseThrow(() -> new UnauthorisedException("No user with passCode found"));
+
         return user.getId();
     }
 }

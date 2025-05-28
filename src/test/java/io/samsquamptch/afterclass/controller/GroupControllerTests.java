@@ -1,6 +1,7 @@
 package io.samsquamptch.afterclass.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.samsquamptch.afterclass.components.SessionValidator;
 import io.samsquamptch.afterclass.controllers.GroupController;
 import io.samsquamptch.afterclass.dto.GroupRequestDTO;
 import io.samsquamptch.afterclass.dto.GroupDTO;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,8 +24,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.springframework.http.MediaType;
 
+import java.util.ArrayList;
+
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(GroupController.class)
+@Import(SessionValidator.class)
 public class GroupControllerTests {
 
     @Autowired
@@ -41,7 +46,7 @@ public class GroupControllerTests {
     @BeforeEach
     public void setup() {
         request = new GroupRequestDTO("Test Group");
-        testDTO = new GroupDTO(1L, "Test Group", "zXXtpQ", null);
+        testDTO = new GroupDTO(1L, "Test Group", "zXXtpQ", new ArrayList<>());
     }
 
     @Test
