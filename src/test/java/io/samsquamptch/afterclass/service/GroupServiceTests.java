@@ -1,16 +1,19 @@
 package io.samsquamptch.afterclass.service;
 
+import io.samsquamptch.afterclass.components.EntityRelationValidator;
 import io.samsquamptch.afterclass.dto.GroupDTO;
 import io.samsquamptch.afterclass.services.GroupService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Transactional
+@Import(EntityRelationValidator.class)
 public class GroupServiceTests extends AbstractIntegrationTests {
 
     @Autowired

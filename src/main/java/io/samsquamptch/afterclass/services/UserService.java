@@ -2,6 +2,7 @@ package io.samsquamptch.afterclass.services;
 
 import io.samsquamptch.afterclass.Group;
 import io.samsquamptch.afterclass.User;
+import io.samsquamptch.afterclass.components.EntityRelationValidator;
 import io.samsquamptch.afterclass.dto.CreatedUserDTO;
 import io.samsquamptch.afterclass.dto.LessonDTO;
 import io.samsquamptch.afterclass.dto.UserDTO;
@@ -22,11 +23,16 @@ public class UserService {
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
     private final LessonService lessonService;
+    private final EntityRelationValidator entityRelationValidator;
 
-    public UserService(UserRepository userRepository, GroupRepository groupRepository, LessonService lessonService) {
+    public UserService(UserRepository userRepository,
+                       GroupRepository groupRepository,
+                       LessonService lessonService,
+                       EntityRelationValidator entityRelationValidator) {
         this.userRepository = userRepository;
         this.groupRepository = groupRepository;
         this.lessonService = lessonService;
+        this.entityRelationValidator = entityRelationValidator;
     }
 
     public CreatedUserDTO createUser(Long groupId, String name) {
@@ -51,7 +57,7 @@ public class UserService {
     }
 
     public void updateUser(Long groupId, Long id, String name) {
-        validateUserAndGroup(groupId, id);
+        entityRelationValidator.validateUserToGroup(groupId, id);
         User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
         user.setName(name);
         userRepository.save(user);
@@ -59,16 +65,9 @@ public class UserService {
 
     @Transactional
     public void deleteUser(Long groupId, Long id) {
-        validateUserAndGroup(groupId, id);
+        entityRelationValidator.validateUserToGroup(groupId, id);
         User user = userRepository.findById(id).orElseThrow();
         userRepository.delete(user);
-    }
-
-    private void validateUserAndGroup(Long groupId, Long userId) {
-        boolean isValid = userRepository.existsByIdAndGroupId(userId, groupId);
-        if (!isValid) {
-            throw new IllegalArgumentException("User does not belong to group");
-        }
     }
 
     private List<LessonDTO> getLessonsFromUser(Long groupId, Long userId) {

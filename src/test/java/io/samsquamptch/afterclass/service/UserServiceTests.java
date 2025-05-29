@@ -1,6 +1,7 @@
 package io.samsquamptch.afterclass.service;
 
 import io.samsquamptch.afterclass.User;
+import io.samsquamptch.afterclass.components.EntityRelationValidator;
 import io.samsquamptch.afterclass.dto.CreatedUserDTO;
 import io.samsquamptch.afterclass.dto.UserDTO;
 import io.samsquamptch.afterclass.exception.NotFoundException;
@@ -9,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
+@Import(EntityRelationValidator.class)
 public class UserServiceTests extends AbstractIntegrationTests {
 
     @Autowired
@@ -51,5 +54,12 @@ public class UserServiceTests extends AbstractIntegrationTests {
         assertTrue(userRepository.existsById(2L));
         userService.deleteUser(1L, 2L);
         assertFalse(userRepository.existsById(2L));
+    }
+
+    @Test
+    public void authFailure() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            userService.deleteUser(2L, 1L);
+        });
     }
 }

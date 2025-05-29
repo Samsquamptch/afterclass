@@ -2,6 +2,7 @@ package io.samsquamptch.afterclass.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.samsquamptch.afterclass.WeekDay;
+import io.samsquamptch.afterclass.components.SessionValidator;
 import io.samsquamptch.afterclass.controllers.LessonController;
 import io.samsquamptch.afterclass.dto.LessonDTO;
 import io.samsquamptch.afterclass.dto.LessonRequestDTO;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -27,6 +29,7 @@ import java.time.LocalTime;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(LessonController.class)
+@Import(SessionValidator.class)
 public class LessonControllerTests {
     @Autowired
     private MockMvc mvc;

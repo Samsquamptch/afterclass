@@ -2,6 +2,7 @@ package io.samsquamptch.afterclass.service;
 
 import io.samsquamptch.afterclass.Lesson;
 import io.samsquamptch.afterclass.WeekDay;
+import io.samsquamptch.afterclass.components.EntityRelationValidator;
 import io.samsquamptch.afterclass.dto.LessonDTO;
 import io.samsquamptch.afterclass.dto.LessonRequestDTO;
 import io.samsquamptch.afterclass.exception.NotFoundException;
@@ -10,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -19,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
+@Import(EntityRelationValidator.class)
 public class LessonServiceTests extends AbstractIntegrationTests {
 
     @Autowired
@@ -78,5 +81,12 @@ public class LessonServiceTests extends AbstractIntegrationTests {
         assertTrue(lessonRepository.existsById(1L));
         lessonService.deleteLesson(1L, 1L, 1L);
         assertFalse(lessonRepository.existsById(1L));
+    }
+
+    @Test
+    public void authFailure() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            lessonService.getLesson(1L, 1L, 3L);
+        });
     }
 }
