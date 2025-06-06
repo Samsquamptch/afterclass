@@ -22,6 +22,24 @@ public class AuthController {
         this.sessionValidator = sessionValidator;
     }
 
+    @GetMapping("/session/group")
+    public ResponseEntity<Void> getSession(HttpSession session) {
+        Long groupdId = (Long) session.getAttribute("groupdId");
+        if (groupdId == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/session/user")
+    public ResponseEntity<Void> getUser(HttpSession session) {
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/group")
     public ResponseEntity<Void> getGroup(@RequestBody AuthDTO request, HttpSession session) {
         Long groupId = authService.authenticateGroup(request.getPassCode());
