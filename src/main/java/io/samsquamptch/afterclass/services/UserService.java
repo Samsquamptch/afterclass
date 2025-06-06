@@ -56,9 +56,15 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public void updateUser(Long groupId, Long id, String name) {
-        entityRelationValidator.validateUserToGroup(groupId, id);
-        User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
+    public UserDTO getUser(Long groupId, Long userId) {
+        entityRelationValidator.validateUserToGroup(groupId, userId);
+        User user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
+        return new UserDTO(user.getId(), user.getName(), getLessonsFromUser(groupId, userId));
+    }
+
+    public void updateUser(Long groupId, Long userId, String name) {
+        entityRelationValidator.validateUserToGroup(groupId, userId);
+        User user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
         user.setName(name);
         userRepository.save(user);
     }

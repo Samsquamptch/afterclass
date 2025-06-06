@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -22,22 +25,16 @@ public class AuthController {
         this.sessionValidator = sessionValidator;
     }
 
-    @GetMapping("/session/group")
-    public ResponseEntity<Void> getSession(HttpSession session) {
-        Long groupdId = (Long) session.getAttribute("groupdId");
-        if (groupdId == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().build();
-    }
+    @GetMapping("/session")
+    public ResponseEntity<Map<String, Boolean>> getSession(HttpSession session) {
+        boolean hasGroup = session.getAttribute("groupId") != null;
+        boolean hasUser = session.getAttribute("userId") != null;
 
-    @GetMapping("/session/user")
-    public ResponseEntity<Void> getUser(HttpSession session) {
-        Long userId = (Long) session.getAttribute("userId");
-        if (userId == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().build();
+        Map<String, Boolean> result = new HashMap<>();
+        result.put("hasGroup", hasGroup);
+        result.put("hasUser", hasUser);
+
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/group")
