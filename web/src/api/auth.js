@@ -2,12 +2,12 @@ async function checkSession() {
     return {hasGroup: false, hasUser: false}
 }
 
-function AccessGroup() {
-
+function accessGroup(passCode) {
+    return passCode === "alpha123" ? true : false
 }
 
-function AccessUser() {
-    
+function accessUser(passCode) {
+    return passCode === "123"
 }
 
-export {checkSession}
+export {checkSession, accessGroup, accessUser}

@@ -2,16 +2,12 @@ import { useEffect, useState } from "react";
 import { checkSession } from "../api/auth";
 import { MoonLoader } from 'react-spinners';
 import JoinGroup from "../components/JoinGroup";
+import GroupPanel from "../components/GroupPanel";
 
 function Groups() {
 
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleClose = () => {
-    setIsModalOpen(false);
-  };
 
     useEffect(() => {
       async function checkAuth() {
@@ -27,7 +23,7 @@ function Groups() {
   return(
     <>
     <div className="group-panel">
-      {status.hasGroup ? <h1>Groups</h1> : <JoinGroup/>}
+      {status.hasGroup ? <GroupPanel user={status.hasUser} /> : <JoinGroup onJoin={() => setStatus({ hasGroup: true, hasUser: false })}/>}
     </div>
     </>
   )
