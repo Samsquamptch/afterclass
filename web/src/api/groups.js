@@ -2,7 +2,7 @@ async function getGroup() {
     try {
     const response = await fetch('/data.json');
     const data = await response.json();
-    return data.group; // return the actual group object
+    return data.group;
   } catch (error) {
     console.error('Error fetching group data:', error);
     return null;

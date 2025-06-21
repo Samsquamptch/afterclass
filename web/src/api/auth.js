@@ -7,7 +7,11 @@ function accessGroup(passCode) {
 }
 
 function accessUser(passCode) {
-    return passCode === "123"
+    return passCode === "bob"
 }
 
-export {checkSession, accessGroup, accessUser}
+function logOut() {
+    console.log("Logged out")
+}
+
+export {checkSession, accessGroup, accessUser, logOut}
