@@ -10,4 +10,19 @@ async function removeLesson(lessonId) {
     }
 }
 
-export {removeLesson}
+async function addLesson(lesson) {
+    return {
+        id: Math.floor(Math.random() * 100) + 1,
+        name: lesson.name,
+        weekday: lesson.weekday,
+        startTime: lesson.startTime,
+        endTime: lesson.endTime
+    }
+}
+
+async function updateLesson(lesson) {
+    console.log(lesson)
+    return true
+}
+
+export {removeLesson, addLesson, updateLesson}

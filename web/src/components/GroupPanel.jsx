@@ -28,8 +28,20 @@ function GroupPanel(props) {
   }
 
   const updateData = () => {
-    setLoading(true)
     loadGroups();
+    console.log("update")
+  }
+
+  const renderComponent = () => {
+    const lessonsWithUser = groupData.users.flatMap(user =>
+    user.lessons.map(lesson => ({
+      userId: user.id,
+      userName: user.name,
+      lesson
+    })))
+    return(lessonsWithUser.map((lesson, index) => (
+    <p>{JSON.stringify(lesson)}</p>
+    )));
   }
 
   if (loading) return <MoonLoader color="#4C0B16" speedMultiplier={0.75} />;
@@ -41,7 +53,7 @@ function GroupPanel(props) {
           <h1>{groupData.name}</h1>
           <p>Group Passcode: {groupData.passcode}</p>
           <button onClick={() => leaveGroup()}>Exit Group</button>
-          <p>{JSON.stringify(groupData)}</p>
+          {renderComponent()}
         </div>
         <div>
           {status ? (

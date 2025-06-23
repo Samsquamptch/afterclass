@@ -1,5 +1,5 @@
 function createUser(name) {
-    console.log(name)
+    return "Axw1"
 }
 
 async function getUser() {
