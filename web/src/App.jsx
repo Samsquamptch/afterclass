@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Groups from "./pages/GroupPage";
 import About from "./pages/AboutPage";
 import NoPage from "./pages/NoPage";
+import './index.css';
 
 function App() {
 

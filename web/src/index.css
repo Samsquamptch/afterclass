@@ -1,24 +1,10 @@
-.card{
-  border: 1px solid hsl(0, 0%, 80%);
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
-  padding: 20px;
-  margin: 10px;
-  text-align: center;
-  max-width: 250px;
-  display: inline-block;
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --color-neutral: #E3E3E3;
+    --color-birkbeck: #4C0B16;
+    --color-hover: #381f24;
+    --font-archivo: "Archivo Black", sans-serif;
 }
 
-.card .card-image{
-  max-width: 60%;
-}
-
-.card .card-title{
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
-  color: black;
-}
-
-.card .card-text{
-  font-family: Arial, Helvetica, sans-serif;
-}
