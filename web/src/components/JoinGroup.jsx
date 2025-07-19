@@ -38,42 +38,58 @@ function JoinGroup({onJoin}) {
             case joinState.None:
                 return(
                     <div>
-                        <h1>No Group Found</h1>
+                        <h1 className="text-2xl font-bold">No Group Found</h1>
                         <p>Please join an existing group or create a new group</p>
-                        <button onClick={() => setJoinState(joinState.Passcode)}>Join Existing Group</button>
-                        <button onClick={() => setJoinState(joinState.Create)}>Create New Group</button>
+                        <button 
+                        className="bg-birkbeck hover:bg-hover rounded-none outline-2 outline-black outline-solid text-white text-xl mt-2 mr-2"
+                        onClick={() => setJoinState(joinState.Passcode)}>Join Existing Group</button>
+                        <button 
+                        className="bg-birkbeck hover:bg-hover rounded-none outline-2 outline-black outline-solid text-white text-xl mt-2"
+                        onClick={() => setJoinState(joinState.Create)}>Create New Group</button>
                     </div>
                 );
             case joinState.Passcode:
                 return(
                     <div>
-                        <h1>Join Group</h1>
+                        <h1 className="text-2xl font-bold">Join Group</h1>
                         <p>Please enter the group passcode</p>
-                        <input value={textInput} onChange={e => setTextInput(e.target.value)}></input>
-                        <button onClick={checkPasscode}>Join</button>
+                        <input 
+                        className="bg-white hover:stroke-stone-300 outline-white outline-1 text-xl my-2 mr-1"
+                        value={textInput} onChange={e => setTextInput(e.target.value)}></input>
+                        <button 
+                        className="bg-birkbeck hover:bg-hover rounded-none outline-2 outline-black outline-solid text-white text-xl"
+                        onClick={checkPasscode}>Join</button>
                         {error && (
                             <span style={{ marginLeft: '10px', color: 'red' }}>
                             {error}
                             </span>
                         )}
                         <br></br>
-                        <button onClick={goBack}>Back</button>
+                        <button 
+                        className="bg-birkbeck hover:bg-hover rounded-none outline-2 outline-black outline-solid text-white text-xl"
+                        onClick={goBack}>Back</button>
                     </div>
                 );
             case joinState.Create:
                 return(
                     <div>
-                        <h1>Create Group</h1>
+                        <h1 className="text-2xl font-bold">Create Group</h1>
                         <p>Please set the group name</p>
-                        <input value={textInput} onChange={e => setTextInput(e.target.value)}></input>
-                        <button onClick={newGroup}>Create</button>
+                        <input 
+                        className="bg-white hover:stroke-stone-300 outline-white outline-1 text-xl my-2 mr-1"
+                        value={textInput} onChange={e => setTextInput(e.target.value)}></input>
+                        <button 
+                        className="bg-birkbeck hover:bg-hover rounded-none outline-2 outline-black outline-solid text-white text-xl"
+                        onClick={newGroup}>Create</button>
                         {error && (
                             <span style={{ marginLeft: '10px', color: 'red' }}>
                             {error}
                             </span>
                         )}
                         <br></br>
-                        <button onClick={goBack}>Back</button>
+                        <button 
+                        className="bg-birkbeck hover:bg-hover rounded-none outline-2 outline-black outline-solid text-white text-xl"
+                        onClick={goBack}>Back</button>
                     </div>
                 );
         }
