@@ -50,7 +50,7 @@ function GroupPanel(props) {
     <>
       <div>
         <div>
-          <h1>{groupData.name}</h1>
+          <h1 className="text-4xl font-bold">{groupData.name}</h1>
           <p>Group Passcode: {groupData.passcode}</p>
           <button onClick={() => leaveGroup()}>Exit Group</button>
           {renderComponent()}
