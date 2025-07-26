@@ -17,8 +17,8 @@ const Modal = ({ isOpen, children }) => {
         >
             <div
                 style={{
-                    background: "white",
-                    width: 360,
+                    background: "#E3E3E3",
+                    width: 400,
                     margin: "auto",
                     padding: "2%",
                     border: "2px solid #000",

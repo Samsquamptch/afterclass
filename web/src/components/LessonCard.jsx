@@ -56,17 +56,17 @@ function LessonCard({ lesson, index, onDelete, onEdit }) {
   const renderComponent = () => {
     if (editState) {
       return (
-        <div key={lesson.id || index} className="lesson-card">
+        <div key={lesson.id || index} className="w-5/6 rounded-2xl p-2 my-1">
           <form onSubmit={saveLessonChanges}>
             <p>
               <label>
-                Name: <input name="LessonName" defaultValue={lessonName} />
+                Name: <input className="bg-white" name="LessonName" size="16" defaultValue={lessonName} />
               </label>
             </p>
             <p>
               <label>
                 Day:{" "}
-                <select name="lessonDay" defaultValue={lessonDay}>
+                <select className="bg-white" name="lessonDay" defaultValue={lessonDay}>
                   <option value="Monday">Monday</option>
                   <option value="Tuesday">Tuesday</option>
                   <option value="Wednesday">Wednesday</option>
@@ -81,6 +81,7 @@ function LessonCard({ lesson, index, onDelete, onEdit }) {
               <label>
                 Start Time:{" "}
                 <input
+                  className="bg-white"
                   type="time"
                   name="startTime"
                   defaultValue={lessonStart}
@@ -90,12 +91,19 @@ function LessonCard({ lesson, index, onDelete, onEdit }) {
             <p>
               <label>
                 End Time:{" "}
-                <input type="time" name="endTime" defaultValue={lessonEnd} />
+                <input 
+                className="bg-white"
+                type="time"
+                name="endTime"
+                defaultValue={lessonEnd} />
               </label>
             </p>
             <p>
-              <button type="submit">Save</button>
-              <button type="button" onClick={() => setEditState(false)}>
+              <button className="bg-birkbeck hover:bg-hover rounded-none outline-2 outline-black outline-solid p-1 text-white text-sm mt-1 mr-1"
+              type="submit">Save</button>
+              <button type="button" 
+              className="bg-birkbeck hover:bg-hover rounded-none outline-2 outline-black outline-solid p-1 text-white text-sm ml-1"
+              onClick={() => setEditState(false)}>
                 Cancel
               </button>
             </p>
@@ -105,13 +113,17 @@ function LessonCard({ lesson, index, onDelete, onEdit }) {
       );
     } else {
       return (
-        <div key={lesson.id || index} className="lesson-card">
-          <p>Name: {lessonName}</p>
+        <div key={lesson.id || index} className="w-5/6 rounded-2xl p-2 my-1">
+          <p className="text-2xl">{lessonName}</p>
           <p>Day: {lessonDay}</p>
           <p>Start: {lessonStart}</p>
           <p>End: {lessonEnd}</p>
-          <button onClick={() => setEditState(true)}>Edit</button>
-          <button onClick={() => deleteLesson()}>Delete</button>
+          <button 
+          className="bg-birkbeck hover:bg-hover rounded-none outline-2 outline-black outline-solid p-1 text-white text-sm mt-1 mr-1"
+          onClick={() => setEditState(true)}>Edit</button>
+          <button 
+          className="bg-birkbeck hover:bg-hover rounded-none outline-2 outline-black outline-solid p-1 text-white text-sm ml-1"
+          onClick={() => deleteLesson()}>Delete</button>
         </div>
       );
     }

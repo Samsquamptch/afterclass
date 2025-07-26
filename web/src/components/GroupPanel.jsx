@@ -49,13 +49,15 @@ function GroupPanel(props) {
   return (
     <>
       <div>
-        <div>
+        <div className="relative font-archivo">
           <h1 className="text-4xl font-bold">{groupData.name}</h1>
-          <p>Group Passcode: {groupData.passcode}</p>
-          <button onClick={() => leaveGroup()}>Exit Group</button>
+          <p className="text-lg py-2">Group Passcode: {groupData.passcode}</p>
+          <button 
+          className="bg-birkbeck hover:bg-hover rounded-none outline-2 outline-black outline-solid p-1 text-white text-xl absolute top-2 right-0"
+          onClick={() => leaveGroup()}>Exit Group</button>
           {renderComponent()}
         </div>
-        <div>
+        <div className="pt-4 font-archivo">
           {status ? (
             <UserPanel onUpdate={updateData} />
           ) : (

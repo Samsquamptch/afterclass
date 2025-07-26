@@ -124,7 +124,9 @@ function JoinUser({onJoin}) {
 
     return(
         <>
-        {renderComponent()}
+        <div className="flex justify-center">
+            {renderComponent()}
+        </div>
         </>
     )
 }

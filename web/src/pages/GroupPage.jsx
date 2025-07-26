@@ -22,7 +22,7 @@ function Groups() {
   
   return(
     <>
-    <div className="group-panel">
+    <div className="flex justify-center pt-4">
       {status.hasGroup ? <GroupPanel user={status.hasUser} /> : <JoinGroup onJoin={() => setStatus({ hasGroup: true, hasUser: false })}/>}
     </div>
     </>

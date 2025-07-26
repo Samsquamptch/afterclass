@@ -37,7 +37,7 @@ function JoinGroup({onJoin}) {
         switch (currentJoinState) {
             case joinState.None:
                 return(
-                    <div>
+                    <div className="font-archivo">
                         <h1 className="text-4xl font-bold">No Group Found</h1>
                         <p>Please join an existing group or create a new group</p>
                         <button 
@@ -50,7 +50,7 @@ function JoinGroup({onJoin}) {
                 );
             case joinState.Passcode:
                 return(
-                    <div>
+                    <div className="font-archivo">
                         <h1 className="text-4xl font-bold">Join Group</h1>
                         <p>Please enter the group passcode</p>
                         <input 
@@ -73,7 +73,7 @@ function JoinGroup({onJoin}) {
                 );
             case joinState.Create:
                 return(
-                    <div>
+                    <div className="font-archivo">
                         <h1 className="text-4xl font-bold">Create Group</h1>
                         <p>Please set the group name</p>
                         <input 

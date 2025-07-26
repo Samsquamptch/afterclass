@@ -39,7 +39,6 @@ function UserPanel({onUpdate}) {
                 startTime: start,
                 endTime: end};
             newLesson = await addLesson(newLesson)
-            console.log({newLesson})
             setLessons(lessons => [...lessons, newLesson]);
             handleClose()
             onUpdate()
@@ -67,23 +66,31 @@ function UserPanel({onUpdate}) {
         onUpdate()
     }
 
-    if (loading) return <MoonLoader color="#4C0B16" speedMultiplier={0.75}/>;
+    if (loading) return(
+        <>
+        <div className="flex justify-center">
+            <MoonLoader color="#4C0B16" speedMultiplier={0.75}/>
+        </div>
+    </>
+    )
 
     return(
         <>
-        <div>
-            <h2>{userData.name}</h2>
-            <button onClick={handleOpen}>Add Lesson</button>
+        <div className="relative">
+            <h2 className="text-4xl font-bold pb-1">{userData.name}</h2>
+            <button 
+            className="bg-birkbeck hover:bg-hover rounded-none outline-2 outline-black outline-solid px-1 text-white text-lg my-2 absolute top-0 right-16"
+            onClick={handleOpen}>Add Lesson</button>
             <Modal isOpen={open} onClose={handleClose}>
                 <>
-                    <h1>Add New Lesson</h1>
-                    <form onSubmit={newLesson}>
-                        <label>
-                            Name: <input name="LessonName" />
+                    <h1 className="text-2xl font-bold">Add New Lesson</h1>
+                    <form onSubmit={newLesson} className="text-xl relative">
+                        <label className="font-archivo">
+                            Name: <input name="LessonName" size="16" className="bg-white my-1 py-1"/>
                         </label>
                         <br/>
                         <label>
-                            Day: <select name="lessonDay">
+                            Day: <select name="lessonDay" className="bg-white my-1 p-1">
                                     <option value="Monday">Monday</option>
                                     <option value="Tuesday">Tuesday</option>
                                     <option value="Wednesday">Wednesday</option>
@@ -95,17 +102,22 @@ function UserPanel({onUpdate}) {
                         </label>
                         <br/>
                         <label>
-                            Start Time: <input type="time" name="startTime" />
+                            Start Time: <input type="time" name="startTime" className="bg-white my-1 p-1"/>
                         </label>
                         <br/>
                         <label>
-                            End Time: <input type="time" name="endTime" />
+                            End Time: <input type="time" name="endTime" className="bg-white my-1 p-1"/>
                         </label>
                         <br/>
-                        <button type="submit">Add</button>
-                        <button type="button" onClick={handleClose}>Cancel</button>
+                        <button 
+                        className="bg-birkbeck hover:bg-hover rounded-none outline-2 outline-black outline-solid p-1 text-white mt-5 mr-4"
+                        type="submit">Add</button>
+                        <button 
+                        className="bg-birkbeck hover:bg-hover rounded-none outline-2 outline-black outline-solid p-1 text-white"
+                        type="button" onClick={handleClose}>Cancel</button>
+                        <br></br>
                         {error && (
-                            <span style={{color: 'red' }}>
+                            <span className="text-red-800 text-base">
                                 {error}
                             </span>
                         )}
@@ -113,15 +125,17 @@ function UserPanel({onUpdate}) {
                 </>
             </Modal>
         </div>
-        {lessons.map((lesson, index) => (
-            <LessonCard
-                key={index}
-                lesson={lesson}
-                index={index}
-                onDelete={deleteLesson}
-                onEdit={editLesson}
-            />
-        ))}
+        <div className="grid grid-cols-3 grid-rows-2">
+            {lessons.map((lesson, index) => (
+                <LessonCard
+                    key={lesson.id}
+                    lesson={lesson}
+                    index={index}
+                    onDelete={deleteLesson}
+                    onEdit={editLesson}
+                />
+            ))}
+        </div>
         </>
     )
 }
