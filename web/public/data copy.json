@@ -1,0 +1,49 @@
+{
+  "group": {
+    "id": 1,
+    "name": "Alpha Group",
+    "passcode": "alpha123",
+    "users": [
+      {
+        "id": 1,
+        "name": "Alice",
+        "lessons": [
+          {
+            "id": 201,
+            "name": "Math",
+            "weekday": "Monday",
+            "startTime": "09:00",
+            "endTime": "10:30"
+          },
+          {
+            "id": 202,
+            "name": "Science",
+            "weekday": "Wednesday",
+            "startTime": "11:00",
+            "endTime": "12:30"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Bob",
+        "lessons": [
+          {
+            "id": 203,
+            "name": "History",
+            "weekday": "Tuesday",
+            "startTime": "10:00",
+            "endTime": "11:30"
+          },
+          {
+            "id": 204,
+            "name": "Art",
+            "weekday": "Thursday",
+            "startTime": "13:00",
+            "endTime": "14:30"
+          }
+        ]
+      }
+    ]
+  }
+}

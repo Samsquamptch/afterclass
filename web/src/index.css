@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --color-neutral: #E3E3E3;
+    --color-birkbeck: #4C0B16;
+    --color-hover: #381f24;
+    --font-archivo: "Archivo Black", sans-serif;
+}
+
