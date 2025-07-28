@@ -5,10 +5,10 @@ import io.samsquamptch.afterclass.dto.AuthDTO;
 import io.samsquamptch.afterclass.services.AuthService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -22,18 +22,36 @@ public class AuthController {
         this.sessionValidator = sessionValidator;
     }
 
-    @GetMapping("/group")
-    public ResponseEntity<Void> getGroup(@RequestBody AuthDTO request, HttpSession session) {
+    @GetMapping("/session")
+    public ResponseEntity<Map<String, Boolean>> getSession(HttpSession session) {
+        boolean hasGroup = session.getAttribute("groupId") != null;
+        boolean hasUser = session.getAttribute("userId") != null;
+
+        Map<String, Boolean> result = new HashMap<>();
+        result.put("hasGroup", hasGroup);
+        result.put("hasUser", hasUser);
+
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/group")
+    public ResponseEntity<Void> setGroup(@RequestBody AuthDTO request, HttpSession session) {
         Long groupId = authService.authenticateGroup(request.getPassCode());
         session.setAttribute("groupId", groupId);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<Void> getUser(@RequestBody AuthDTO request, HttpSession session) {
+    @PostMapping("/user")
+    public ResponseEntity<Void> setUser(@RequestBody AuthDTO request, HttpSession session) {
         Long groupId = sessionValidator.validateSessionAttribute("groupId", session);
         Long userId = authService.authenticateUser(request.getPassCode(), groupId);
         session.setAttribute("userId", userId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpSession session) {
+        session.invalidate();
         return ResponseEntity.ok().build();
     }
 }

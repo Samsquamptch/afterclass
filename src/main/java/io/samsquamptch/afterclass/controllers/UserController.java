@@ -39,6 +39,14 @@ public class UserController {
         return new ResponseEntity<>(userDTOs, HttpStatus.OK);
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> getUser(HttpSession session) {
+        Long groupId = (Long) session.getAttribute("groupId");
+        Long userId = (Long) session.getAttribute("userId");
+        UserDTO userDTO = userService.getUser(groupId, userId);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    }
+
     @PutMapping()
     public ResponseEntity<Void> updateUser(@RequestBody UserRequestDTO request, HttpSession session) {
         Long groupId = sessionValidator.validateSessionAttribute("groupId", session);
